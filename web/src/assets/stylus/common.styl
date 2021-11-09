@@ -1,0 +1,53 @@
+// 通用样式
+
+// 单行文本省略
+.text-ellipsis
+  overflow: hidden
+  white-space: nowrap
+  text-overflow: ellipsis
+
+// 清除浮动
+.clearfloat
+  zoom: 1
+  &:after
+    display: block
+    clear: both
+    content: ""
+    visibility: hidden
+    height: 0
+
+// 边框圆角
+.radius-small
+  border-radius: 2px
+.radius-medium
+  border-radius: 4px
+.radius-large
+  border-radius: 36px
+.radius-round
+  border-radius: 50%
+
+// 顶部吸附
+.topbar
+  position: fixed
+  top: 0
+  left: 0
+  z-index: 999
+  width: 100%
+  padding: 0 1.5rem 
+  box-sizing: border-box
+  .logo img
+    display: block
+    width: 3rem 
+
+// 轮播图分页器
+.swiper-pagination
+  text-align: right !important
+  box-sizing: border-box 
+  padding-right: 1.5rem
+  padding-bottom: 0.3rem
+  .swiper-pagination-bullet
+    border-radius: 2px
+    background-color: #fff
+    opacity: 1
+    &.swiper-pagination-bullet-active
+      background-color: #4b67af
