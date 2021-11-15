@@ -131,15 +131,11 @@ export default {
             break
           case 4:
             item.title = 'TGA'
-            item.banner = 'match_04.jpeg'
+            item.banner = 'match_05.jpeg'
             break
           case 5:
-            item.title = 'MGI'
-            item.banner = 'match_04.jpeg'
-            break
-          case 6:
-            item.title = 'K甲联赛'
-            item.banner = 'match_04.jpeg'
+            item.title = 'WGI'
+            item.banner = 'match_06.jpeg'
             break
         }
       })

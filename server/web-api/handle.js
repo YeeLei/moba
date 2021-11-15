@@ -1,5 +1,4 @@
 // 路由处理函数
-
 const mongoose = require('mongoose')
 const AdModel = require('../models/ad')
 const CategoryModel = require('../models/category')

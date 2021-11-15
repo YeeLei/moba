@@ -44,7 +44,7 @@ module.exports = {
     const user = await UserModel.findOne({ username }).select('+password')
     // 用户不存在
     if (!user) {
-      response(res, 422, '邮箱或密码错误')
+      response(res, 422, '用户名或密码错误')
       return
     }
 
@@ -52,7 +52,7 @@ module.exports = {
     const isPassword = bcrypt.compareSync(password, user.password)
     // 密码错误
     if (!isPassword) {
-      response(res, 422, '邮箱或密码错误')
+      response(res, 422, '用户名或密码错误')
       return
     }
 
