@@ -4,8 +4,6 @@ wang-moba 是使用 Node.js (Express.js) + Vue.js (Element UI) 全栈开发的�
 
 项目已上线，欢迎体验！<https://www.moba.tld>
 
-如果对你有帮助话的帮忙点个 star，谢谢！
-
 ## 项目布局
 
 ```
