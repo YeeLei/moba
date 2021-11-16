@@ -4,7 +4,7 @@ const EquipModel = require('../models/equip')
 const StoreModel = require('../models/store')
 const HeroModel = require('../models/hero')
 const AdModel = require('../models/ad')
-const UserModel = require('../models/user')
+const UserModel = require('../models/adminUser')
 const ArticleModel = require('../models/article')
 const VideoModel = require('../models/video')
 
@@ -38,13 +38,13 @@ module.exports = {
   // 登录路由处理
   async loginHandle(req, res) {
 
-    const { username, password } = req.body
+    const { email, password } = req.body
 
     // 1. 根据邮箱查找用户
-    const user = await UserModel.findOne({ username }).select('+password')
+    const user = await UserModel.findOne({ email }).select('+password')
     // 用户不存在
     if (!user) {
-      response(res, 422, '用户名或密码错误')
+      response(res, 422, '邮箱或密码错误')
       return
     }
 
@@ -52,7 +52,7 @@ module.exports = {
     const isPassword = bcrypt.compareSync(password, user.password)
     // 密码错误
     if (!isPassword) {
-      response(res, 422, '用户名或密码错误')
+      response(res, 422, '邮箱或密码错误')
       return
     }
 
@@ -61,7 +61,7 @@ module.exports = {
       id: String(user._id)
     }, SECRET)
     // 返回token
-    response(res, 0, '登录成功', { username }, token)
+    response(res, 0, '登录成功', { user }, token)
   },
 
   //登录验证
@@ -449,11 +449,11 @@ module.exports = {
   // ----- 添加或修改管理员 -----
   async userEditHandle(req, res) {
     // 获取管理员信息
-    const { username, password, id } = req.body
-    const isHave = await UserModel.findOne({ username })
-    // 如果是添加, 有同名的不允许添加
+    const { id, email, password, name, avatar } = req.body
+    const isHave = await UserModel.findOne({ email })
+    // 如果是添加, 有邮箱同名的不允许添加
     if (isHave && !id) {
-      response(res, 1, '该管理员已存在')
+      response(res, 1, '该邮箱已存在')
       return
     }
     let item, msg
@@ -467,11 +467,11 @@ module.exports = {
         return
       }
       // 密码正确才允许修改管理员
-      item = await UserModel.findByIdAndUpdate(id, { username, password })
+      item = await UserModel.findByIdAndUpdate(id, { email, password, name, avatar })
       msg = '更新管理员成功'
     } else {
       // 添加管理员
-      item = await UserModel.create({ username, password })
+      item = await UserModel.create({ email, password, name, avatar })
       msg = '新建管理员成功'
     }
     response(res, 0, msg, item)

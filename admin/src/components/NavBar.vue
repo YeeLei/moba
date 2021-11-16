@@ -10,31 +10,40 @@
     <div class="dropdown-wrap" v-if="isAvatar">
       <el-dropdown trigger="click" @command="handleCommand">
         <span class="el-dropdown-link">
-          <el-avatar
-            shape="square"
-            size="medium"
-            src="https://avatars.githubusercontent.com/u/44431910?v=4"
-          ></el-avatar>
+          <el-avatar shape="square" size="medium" :src="user.avatar"></el-avatar>
           <i class="el-icon-caret-bottom"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="dashboard">首页</el-dropdown-item>
+          <el-dropdown-item command="info">个人信息</el-dropdown-item>
           <el-dropdown-item :divided="true" command="logout">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+    </div>
+    <div class="user">
+      <div class="userinfo">
+        <div class="welcome">
+          <span class="name comename">Hi,</span>
+          <span class="name avatarname">{{ user.name }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import BreadCrumb from '@/components/BreadCrumb'
+
 export default {
   props: ['mobile'],
   name: 'NavBar',
   data() {
     return {
+      user: {},
       isAvatar: true, // 控制头像的显示
     }
+  },
+  created() {
+    this.user = JSON.parse(localStorage.getItem('user'))
   },
   computed: {
     isCollapse() {
@@ -54,11 +63,13 @@ export default {
     },
     // 点击菜单项触发事件
     handleCommand(command) {
-      command === 'logout' ? this.logout() : this.$router.push('/home')
+      const id = this.user._id
+      command === 'logout' ? this.logout() : this.$router.push(`/system/userUpdate/${id}`)
     },
     // 退出登录
     logout() {
       localStorage.removeItem('token')
+      localStorage.removeItem('user')
       this.$router.push('/login')
     },
   },
@@ -82,6 +93,42 @@ export default {
       height: 20px;
       font-size: $font-sm;
       cursor: pointer;
+    }
+  }
+
+  .user {
+    float: right;
+    height: 50px;
+    padding-right: 10px;
+
+    .userinfo {
+      width: 100%;
+      line-height: 50px;
+      text-align: right;
+
+      .welcome {
+        display: inline-block;
+        width: auto;
+        line-height: 50px;
+        height: 50px;
+        padding: 0 5px;
+
+        .comename {
+          font-size: $font-xs;
+          margin-right: 5px;
+        }
+
+        .avatarname {
+          color: #409eff;
+          font-weight: bolder;
+        }
+      }
+
+      .name {
+        line-height: 20px;
+        text-align: center;
+        font-size: 13px;
+      }
     }
   }
 

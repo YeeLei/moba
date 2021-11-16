@@ -109,14 +109,10 @@
           <div class="news-cate" :class="calcNewsClass(item.categoryName)">
             {{ item.categoryName }}
           </div>
-          <router-link
-            tag="div"
-            :to="`/article/detail/${item._id}`"
-            class="news-title text-ellipsis"
-          >
+          <router-link tag="a" :to="`/article/detail/${item._id}`" class="news-title text-ellipsis">
             {{ item.title }}
           </router-link>
-          <div class="news-date">{{ item.date | formatDate('MM/DD') }}</div>
+          <span class="news-date">{{ item.date | formatDate('MM/DD') }}</span>
         </div>
       </template>
     </m-card-list>
@@ -441,6 +437,10 @@ export default {
       flex: 1;
       font-size: $font-md;
       color: $dark-22;
+
+      &:visited {
+        color: $grey-99;
+      }
     }
 
     .news-date {

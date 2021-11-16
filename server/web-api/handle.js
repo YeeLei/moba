@@ -102,8 +102,13 @@ module.exports = {
       r2 = r2 + 1
     }
 
-    item.related.push(related[r1])
-    item.related.push(related[r2])
+    if (r1 == r2) {
+      item.related.push(related[r1])
+    } else {
+      item.related.push(related[r1])
+      item.related.push(related[r2])
+    }
+
     response(res, 0, '获取文章详情成功', item)
   },
 

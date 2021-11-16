@@ -1,4 +1,4 @@
-import { auth } from '@/api/user'
+import { auth } from '@/api/adminUser'
 
 // 验证 token 的有效性
 export async function hasToken() {

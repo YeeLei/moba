@@ -1,5 +1,5 @@
 export default {
-  toggleCollapse (ctx, isCollapse) {
+  toggleCollapse(ctx, isCollapse) {
     ctx.commit('toggleCollapse', isCollapse)
   }
 }

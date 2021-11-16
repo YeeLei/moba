@@ -212,20 +212,20 @@ const routes = [
       {
         path: 'userAdd',
         name: 'user-add',
-        component: () => import('@/views/system/UserEdit'),
+        component: () => import('@/views/system/AdminUserEdit'),
         meta: { title: '新建管理员' }
       },
       {
         path: 'userList',
         name: 'user-list',
-        component: () => import('@/views/system/UserList'),
+        component: () => import('@/views/system/AdminUserList'),
         meta: { title: '管理员列表' }
       },
       {
         path: 'userUpdate/:id',
         name: 'user-update',
         props: true,
-        component: () => import('@/views/system/UserEdit'),
+        component: () => import('@/views/system/AdminUserEdit'),
         meta: { title: '编辑管理员' }
       }
     ]

@@ -1,6 +1,24 @@
 <template>
   <div class="login">
     <div class="form_container">
+      <!-- 拼图验证码 -->
+      <div class="code" v-if="flag">
+        <p class="closeBtn"><i class="el-icon-close" @click="flag = !flag"></i></p>
+        <slide-verify
+          :l="42"
+          :r="20"
+          :w="450"
+          :h="350"
+          slider-text="向右滑动"
+          @success="onSuccess"
+          @fail="onFail"
+          @refresh="onRefresh"
+          :style="{ width: '450px' }"
+          class="slide-box"
+          ref="slideBlock"
+          v-show="flag"
+        ></slide-verify>
+      </div>
       <div class="manage_tip">
         <div class="title">
           <img src="../assets/images/logo.png" class="img" />
@@ -13,8 +31,8 @@
           status-icon
           class="loginForm"
         >
-          <el-form-item label="用户名" prop="username">
-            <el-input v-model="ruleForm.username" placeholder="请输入用户名"> </el-input>
+          <el-form-item label="邮箱" prop="email">
+            <el-input v-model="ruleForm.email" placeholder="请输入邮箱"> </el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
             <el-input
@@ -38,37 +56,63 @@
   </div>
 </template>
 <script>
-import { login } from '@/api/user'
+import { login } from '@/api/adminUser'
 
 export default {
   data() {
     return {
+      flag: false,
       loading: false, // 控制登录按钮的加载动画
       ruleForm: {
-        username: '',
+        email: '',
         password: '',
       },
       rules: {
         // 表单验证规则
-        username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+        email: [{ required: true, type: 'email', message: '请输入正确的邮箱', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
       },
     }
   },
   methods: {
+    // 拼图成功
+    onSuccess() {
+      // this.$message.success('验证成功')
+      setTimeout(() => {
+        this.flag = !this.flag
+        this.login()
+      }, 1000)
+    },
+    // 拼图失败
+    onFail() {
+      this.flag = !this.flag
+      this.$message.error('验证失败,请重新验证')
+      setTimeout(() => {
+        this.flag = !this.flag
+      }, 500)
+    },
+    // 拼图刷新
+    onRefresh() {
+      this.flag = !this.flag
+      setTimeout(() => {
+        this.flag = !this.flag
+        this.$message.success('已刷新')
+      }, 500)
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.login()
+          // 拼图出现
+          this.flag = true
         }
       })
     },
     // 登录
     async login() {
-      const { username, password } = this.ruleForm
+      const { email, password } = this.ruleForm
       this.loading = true
 
-      const res = await login({ username, password })
+      const res = await login({ email, password })
       this.loading = false
       if (res.status == 422) {
         //账号或密码错误
@@ -76,6 +120,7 @@ export default {
         return
       }
       localStorage.setItem('token', res.token)
+      localStorage.setItem('user', JSON.stringify(res.data.user))
       this.$router.push('/home')
     },
     // 重置表单
@@ -156,6 +201,23 @@ export default {
         .tip {
           margin-left: 54px;
         }
+      }
+    }
+
+    .code {
+      position: absolute;
+      z-index: 100;
+      top: 50%;
+      left: 50%;
+      transform: translate3d(-50%, -50%, 0);
+
+      >>> canvas {
+        border-radius: 5px;
+        text-shadow: 3px 5px 10px #ccc;
+      }
+
+      >>> .slide-verify-slider {
+        margin-top: 0;
       }
     }
   }

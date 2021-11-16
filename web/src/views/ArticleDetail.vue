@@ -12,7 +12,10 @@
     <div class="body" v-html="articleDetail.body"></div>
     <!-- end of body -->
 
-    <div class="related" v-if="articleDetail.related[0] !== null">
+    <div
+      class="related"
+      v-if="articleDetail.related[0] !== null && articleDetail.related[1] !== null"
+    >
       <div class="related-header">
         <img src="../assets/images/related.png" alt="related" />
         <div class="title">相关资讯</div>
