@@ -1,3 +1,3 @@
-# wang-moba-web
+# moba-web
 
-wang-moba-web是wang-moba项目的web手机端项目
+moba-web 是 moba 项目的 web 移动端项目

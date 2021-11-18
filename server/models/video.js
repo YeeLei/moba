@@ -12,6 +12,8 @@ const VideoSchema = mongoose.Schema({
   play: { type: String },
   cover: { type: String },
   video: { type: String },
+}, {
+  timestamps: true
 })
 
 

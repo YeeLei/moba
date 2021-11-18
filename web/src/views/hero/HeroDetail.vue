@@ -2,10 +2,15 @@
   <div id="hero-detail" v-if="heroDetail">
     <div class="topbar">
       <div class="logo">
-        <img @click="$router.push('/home')" src="../../assets/images/logo.png" alt="logo" />
+        <img
+          @click="$router.push('/home')"
+          src="../../assets/images/logo.jpg"
+          alt="logo"
+          style="width: 30px; height: 30px; border-radius: 0 0.7rem 0"
+        />
       </div>
       <div class="text">
-        <span class="name">王者荣耀资讯站</span>
+        <span class="name">MOBA游戏资讯站</span>
         <span class="tips"></span>
       </div>
       <router-link tag="div" to="/more/heroList" class="more"

@@ -1,3 +1,3 @@
-# wang-moba-admin
+# moba-admin
 
-wang-moba-admin是wang-moba项目的后台管理系统
+moba-admin 是 moba 游戏资讯项目的后台管理系统

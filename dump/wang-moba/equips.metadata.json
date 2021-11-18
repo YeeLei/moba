@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"wang-moba.equips"}],"uuid":"e6fc7a02342345eab8de5c373997430a"}

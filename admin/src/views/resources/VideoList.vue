@@ -20,7 +20,7 @@
       <el-table-column prop="title" label="视频标题" width="400"> </el-table-column>
       <el-table-column prop="category" :formatter="categoryFormat" label="所属分类" width="280">
       </el-table-column>
-      <el-table-column prop="date" label="创建时间" width="220"> </el-table-column>
+      <el-table-column prop="date" label="创建时间" width="220" sortable> </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="mini" @click="$router.push(`/resource/videoUpdate/${scope.row._id}`)"

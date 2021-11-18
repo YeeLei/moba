@@ -121,9 +121,14 @@
     <m-card-list title="英雄列表" icon="icon_hero.jpg" :categories="heroCates">
       <template v-slot:banner>
         <div class="banner">
-          <router-link tag="div" :to="`/hero/detail/${newHeroAds.url}`">
-            <img :src="newHeroAds.image" class="news-hero" alt="new_hero" />
-          </router-link>
+          <swiper ref="mySwiper" :options="swiperOptions">
+            <swiper-slide v-for="(item, index) in newHeroAds" :key="index">
+              <router-link tag="a" :to="`/hero/detail/${item.url}`">
+                <img :src="item.image" class="news-hero" alt="new_hero" />
+              </router-link>
+            </swiper-slide>
+            <div class="swiper-pagination" slot="pagination"></div>
+          </swiper>
         </div>
       </template>
       <template #item="{ category }">
@@ -178,7 +183,6 @@
       </template>
     </m-card-list>
     <!-- end of videoCard -->
-
     <router-link tag="div" to="/strategy" class="video-more">加载更多内容</router-link>
   </div>
 </template>
@@ -238,7 +242,7 @@ export default {
     // 获取最新英雄广告数据
     async fetchHomeNewHeroAds() {
       const res = await fetchHomeNewHeroAds()
-      this.newHeroAds = res.data[0]
+      this.newHeroAds = res.data
     },
 
     // 获取新闻数据

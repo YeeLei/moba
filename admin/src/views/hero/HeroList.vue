@@ -18,6 +18,7 @@
 
     <el-table :data="heroList" border style="width: 100%">
       <el-table-column prop="number" label="编号" width="150"> </el-table-column>
+      <el-table-column prop="_id" label="ID" width="150"> </el-table-column>
       <el-table-column prop="name" label="英雄名称" width="250"> </el-table-column>
       <el-table-column label="头像" width="150">
         <template slot-scope="scope">

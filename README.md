@@ -1,8 +1,8 @@
-# wang-moba
+# moba
 
-wang-moba 是使用 Node.js (Express.js) + Vue.js (Element UI) 全栈开发的王者荣耀手机端官网和管理后台项目
+moba 是使用 Node.js (Express.js) + Vue.js (Element UI) 全栈开发的王者荣耀移动端官网和管理后台项目
 
-项目已上线，欢迎体验！<https://www.moba.tld>
+项目已上线，欢迎体验！<https://test.moba.tld>
 
 ## 项目布局
 

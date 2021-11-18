@@ -1,6 +1,6 @@
 <template>
   <div id="video-play">
-    <video :src="videoDetail.video" controls width="100%"></video>
+    <video :src="videoDetail.video" autoplay controls width="100%"></video>
     <div class="video-info">
       <div class="avatar">
         <img src="../assets/images/default_head.jpg" width="100%" alt="avatar" />
@@ -28,6 +28,9 @@ export default {
     }
   },
   mounted() {
+    this.videoDetail = JSON.parse(localStorage.getItem('video'))
+  },
+  activated() {
     this.videoDetail = JSON.parse(localStorage.getItem('video'))
   },
 }

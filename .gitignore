@@ -11,7 +11,7 @@ yarn-error.log*
 
 /server/node_modules
 /server/upload/video
-
+/server/upload/images
 /web/node_modules
 
 resource

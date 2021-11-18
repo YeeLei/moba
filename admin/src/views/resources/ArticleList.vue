@@ -16,12 +16,7 @@
       </el-input>
     </div>
 
-    <el-table
-      :data="articleList"
-      border
-      :default-sort="{ prop: 'date', order: 'descending' }"
-      style="width: 100%"
-    >
+    <el-table :data="articleList" border style="width: 100%">
       <el-table-column prop="number" label="编号" width="70"> </el-table-column>
       <el-table-column prop="title" label="文章标题" width="500"> </el-table-column>
       <el-table-column prop="categories" :formatter="categoryFormat" label="所属分类" width="280">

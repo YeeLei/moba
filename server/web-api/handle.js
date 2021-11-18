@@ -54,32 +54,35 @@ module.exports = {
           foreignField: 'categories',
           as: 'newsList'
         }
-      },
-      // $addFields 本意是添加字段，这里用来修改 newslist字段，用于取每个二级分类下的前5篇文章
-      {
-        $addFields: {
-          // $newsList 表示关联查出来的 newsList, $slice表示切割
-          newsList: { $slice: ['$newsList', 5] }
-        }
       }
     ])
     // 添加一个热门分类, 
     catesData.unshift({
       name: '热门',
       newsList: await ArticleModel.find().where({ hot: true })
-        .populate('categories').limit(5).lean()
+        .populate('categories').sort({ date: -1 }).limit(5).lean()
     })
     // 给每篇文章添加一个 categoryName 字段, 热门分类就取最后一个分类的名字
-    catesData.forEach(cate => {
-      cate.newsList.forEach(news => {
+    catesData.map(cate => {
+      cate.newsList.map(news => {
         news.categoryName = cate.name === '热门' ?
           news.categories[news.categories.length - 1].name : cate.name
+        return news
       })
       cate.newsList.sort((a, b) => {
-        return a.date < b.date
+        if (a.date > b.date) {
+          return -1
+        } else if (a.date == b.date) {
+          return 0
+        } else {
+          return 1
+        }
       })
+      return cate
     })
-
+    catesData.map(cate => {
+      return cate.newsList = cate.newsList.slice(0, 5)
+    })
     response(res, 0, '获取首页新闻数据成功', catesData)
   },
 
@@ -128,7 +131,7 @@ module.exports = {
 
     if (newsType === '热门') {
       newsList = await ArticleModel.find().where({ hot: true })
-        .populate('categories').skip(skip).limit(pageSize).lean()
+        .populate('categories').limit(pageSize).skip(skip).sort({ date: -1 }).lean()
       // 热门的新闻总数
       let newsTotal = await ArticleModel.find().where({ hot: true }).countDocuments()
       // 没有下一页
@@ -148,7 +151,7 @@ module.exports = {
       // 根据分类的id取查找对应文章
       newsList = await ArticleModel.find().where({
         categories: { $in: [category._id] }
-      }).populate('categories').skip(skip).limit(pageSize).lean()
+      }).populate('categories').skip(skip).limit(pageSize).sort({ date: -1 }).lean()
 
       // 当前分类的新闻总数
       let newsTotal = await ArticleModel.find().where({
@@ -261,6 +264,19 @@ module.exports = {
         }
       },
     ])
+
+    catesData.map(cate => {
+      cate.videoList.sort((a, b) => {
+        if (a.date > b.date) {
+          return -1
+        } else if (a.date == b.date) {
+          return 0
+        } else {
+          return 1
+        }
+      })
+      return cate
+    })
     response(res, 0, '获取首页视频数据成功', catesData)
   },
 

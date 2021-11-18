@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    欢迎来到王者荣耀后台管理系统 !
+    欢迎来到MOBA游戏资讯后台管理系统 !
     <div class="myChart" :style="{ width: '800px', height: '400px' }"></div>
   </div>
 </template>

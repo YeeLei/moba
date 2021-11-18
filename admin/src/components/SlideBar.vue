@@ -19,8 +19,10 @@
           <i class="el-icon-copy-document"></i>
           <span slot="title">分类管理</span>
         </template>
-        <el-menu-item index="/system/cateAdd">新建分类</el-menu-item>
-        <el-menu-item index="/system/cateList">分类列表</el-menu-item>
+        <el-menu-item-group title="分类">
+          <el-menu-item index="/system/cateAdd">新建分类</el-menu-item>
+          <el-menu-item index="/system/cateList">分类列表</el-menu-item>
+        </el-menu-item-group>
       </el-submenu>
 
       <el-submenu index="2">
@@ -58,8 +60,10 @@
           <i class="el-icon-s-custom"></i>
           <span slot="title">英雄管理</span>
         </template>
-        <el-menu-item index="/hero/heroAdd">新建英雄</el-menu-item>
-        <el-menu-item index="/hero/heroList">英雄列表</el-menu-item>
+        <el-menu-item-group title="英雄">
+          <el-menu-item index="/hero/heroAdd">新建英雄</el-menu-item>
+          <el-menu-item index="/hero/heroList">英雄列表</el-menu-item>
+        </el-menu-item-group>
       </el-submenu>
 
       <el-submenu index="5">
@@ -67,16 +71,20 @@
           <i class="el-icon-s-platform"></i>
           <span slot="title">运营管理</span>
         </template>
-        <el-menu-item index="/system/adsAdd">新建广告位</el-menu-item>
-        <el-menu-item index="/system/adsList">广告位列表</el-menu-item>
+        <el-menu-item-group title="广告位">
+          <el-menu-item index="/system/adsAdd">新建广告位</el-menu-item>
+          <el-menu-item index="/system/adsList">广告位列表</el-menu-item>
+        </el-menu-item-group>
       </el-submenu>
       <el-submenu index="6">
         <template slot="title">
           <i class="el-icon-s-tools"></i>
           <span slot="title">系统设置</span>
         </template>
-        <el-menu-item index="/system/userAdd">新建管理员</el-menu-item>
-        <el-menu-item index="/system/userList">管理员列表</el-menu-item>
+        <el-menu-item-group title="管理员">
+          <el-menu-item index="/system/userAdd">新建管理员</el-menu-item>
+          <el-menu-item index="/system/userList">管理员列表</el-menu-item>
+        </el-menu-item-group>
       </el-submenu>
     </el-menu>
   </div>

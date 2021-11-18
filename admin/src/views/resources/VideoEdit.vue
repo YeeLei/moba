@@ -78,7 +78,6 @@ export default {
         play: '',
         cover: '',
         video: '',
-        date: new Date(),
       },
       videoCate: [], // 视频分类
     }
@@ -93,7 +92,6 @@ export default {
         this.model.category = ''
         this.model.cover = ''
         this.video = ''
-        this.date = new Date()
       }
     },
   },

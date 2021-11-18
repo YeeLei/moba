@@ -43,7 +43,6 @@ const routes = [
       }
     ]
   },
-
   {
     path: '/hero/detail/:id',
     name: 'hero-detail',

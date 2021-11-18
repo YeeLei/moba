@@ -2,10 +2,15 @@
   <div id="hero-show">
     <div class="topbar">
       <div class="logo">
-        <img @click="$router.push('/home')" src="../../assets/images/logo.png" alt="logo" />
+        <img
+          @click="$router.push('/home')"
+          src="../../assets/images/logo.jpg"
+          alt="logo"
+          style="width: 30px; height: 30px; border-radius: 0 0.7rem 0"
+        />
       </div>
       <div class="text">
-        <span class="name">荣耀攻略站</span>
+        <span class="name">MOBA游戏资讯站</span>
       </div>
       <span class="tips">团队成就更多</span>
       <router-link tag="div" to="/more/heroList" class="more"

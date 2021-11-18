@@ -59,7 +59,7 @@ module.exports = {
     // 3.登陆成功, 返回token
     const token = jwt.sign({
       id: String(user._id)
-    }, SECRET)
+    }, SECRET, { expiresIn: '72h' })
     // 返回token
     response(res, 0, '登录成功', { user }, token)
   },
@@ -556,7 +556,8 @@ module.exports = {
 
     // 数据库中文章总数
     const articleTotal = await ArticleModel.find(searchQuery).countDocuments()
-    const articleList = await ArticleModel.find(searchQuery).populate('categories').setOptions(searchQuery).skip(skip).limit(pageSize).sort({ date: -1 })
+    const articleList = await ArticleModel.find(searchQuery)
+      .populate('categories').setOptions(searchQuery).skip(skip).limit(pageSize).sort({ date: -1 })
 
     // const articleList = await ArticleModel.aggregate([
     //   {

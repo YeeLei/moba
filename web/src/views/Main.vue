@@ -2,9 +2,14 @@
   <div id="main">
     <div class="topbar">
       <div class="logo">
-        <img @click="$router.push('/home')" src="../assets/images/logo.png" alt="logo" />
+        <img
+          @click="$router.push('/home')"
+          src="../assets/images/logo.jpg"
+          alt="logo"
+          style="width: 30px; height: 30px; border-radius: 0 0.7rem 0"
+        />
       </div>
-      <div class="text"><span class="name">王者荣耀资讯站</span><br /></div>
+      <div class="text"><span class="name">MOBA游戏资讯站</span><br /></div>
       <span class="tips">团队成就更多</span>
       <!-- <div class="download"></div> -->
     </div>
@@ -21,7 +26,9 @@
       </div>
     </div>
     <!-- end of nav -->
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import NProgress from 'nprogress'
 import { hasToken } from '../utils/auth'
 
+import { Message } from 'element-ui'
 
 Vue.use(VueRouter)
 
@@ -259,6 +260,7 @@ router.beforeEach(async (to, from, next) => {
     if ('/login'.indexOf(to.path) !== -1) {
       next()
     } else {
+      Message.error('token已过期，请重新登录！')
       next(`/login?redirect=${to.path}`)
       NProgress.done()
     }

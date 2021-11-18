@@ -48,10 +48,9 @@
                               '.' +
                               parseInt((item.videoList[0].play % 10000) / 1000) +
                               '万'
-                            : item.play
+                            : item.videoList[0].play
                         "
-                        >{{
-                      }}</span>
+                      ></span>
                     </div>
                     <div class="date-wrap">
                       <img src="../assets/images/icon/time.jpg" class="time-img" alt="time" />
@@ -82,7 +81,7 @@
                           '.' +
                           parseInt((video.play % 10000) / 1000) +
                           '万'
-                        : item.play
+                        : video.play
                     "
                   ></span>
                 </div>
