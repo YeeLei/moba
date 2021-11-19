@@ -62,6 +62,9 @@ export default {
       const { newsType, page, pageSize } = this
       const res = await fetchNewsListTwo({ newsType, page, pageSize })
       this.newsList = this.newsList.concat(res.data.newsList)
+      this.newsList.sort((a, b) => {
+        return a.date < b.date
+      })
       this.hasNext = res.data.hasNext
     },
     // 切换新闻类型

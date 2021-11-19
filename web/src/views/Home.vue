@@ -4,7 +4,11 @@
       <swiper ref="mySwiper" :options="swiperOptions">
         <swiper-slide v-for="(item, index) in homeAds" :key="index">
           <a :href="item.url">
-            <img :src="item.image" style="display: block; width: 100%" alt="ads-img" />
+            <img
+              :src="item.image"
+              style="display: block; width: 100%; height: 160px"
+              alt="ads-img"
+            />
           </a>
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>

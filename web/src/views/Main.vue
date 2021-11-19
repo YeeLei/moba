@@ -4,7 +4,7 @@
       <div class="logo">
         <img
           @click="$router.push('/home')"
-          src="../assets/images/logo.jpg"
+          src="../assets/images/logo.png"
           alt="logo"
           style="width: 30px; height: 30px; border-radius: 0 0.7rem 0"
         />
@@ -15,17 +15,10 @@
     </div>
     <!-- end of topbar -->
     <div class="nav">
-      <div class="nav-item">
-        <router-link class="nav-link" to="/home">首页</router-link>
-      </div>
-      <div class="nav-item">
-        <router-link class="nav-link" to="/strategy">攻略中心</router-link>
-      </div>
-      <div class="nav-item">
-        <router-link class="nav-link" to="/match">赛事中心</router-link>
+      <div class="nav-item" v-for="(item, index) in indexItems" :key="index">
+        <router-link class="nav-link" :to="`${item.url}`">{{ item.title }}</router-link>
       </div>
     </div>
-    <!-- end of nav -->
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
@@ -35,6 +28,15 @@
 <script>
 export default {
   name: 'Main',
+  data() {
+    return {
+      indexItems: [
+        { url: '/home', title: '首页' },
+        { url: '/strategy', title: '攻略中心' },
+        { url: '/match', title: '赛事中心' },
+      ],
+    }
+  },
 }
 </script>
 

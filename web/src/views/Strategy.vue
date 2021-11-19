@@ -153,6 +153,7 @@
                     : item.play
                 "
               ></span>
+              <span class="date">{{ item.date | formatDate('MM-DD') }}</span>
             </div>
           </div>
         </div>
@@ -170,7 +171,7 @@
               <div class="t1">{{ item.title }}</div>
               <div class="t2 text-ellipsis">{{ item.title }}</div>
               <div class="date">
-                {{ item.date.split('T')[0] + ' ' + item.date.split('T')[1].split('.')[0] }}
+                {{ item.date | formatDate('YYYY-MM-DD') }}
               </div>
             </div>
           </div>
@@ -613,6 +614,10 @@ export default {
             height: 0.9rem;
             margin-right: 0.5rem;
             vertical-align: middle;
+          }
+
+          .date {
+            float: right;
           }
         }
       }

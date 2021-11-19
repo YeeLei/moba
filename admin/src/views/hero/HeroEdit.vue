@@ -359,7 +359,13 @@
                 <el-input v-model="item.title" placeholder="请输入视频标题"></el-input>
               </el-form-item>
               <el-form-item label="上传日期">
-                <el-date-picker v-model="item.date" type="date" placeholder="选择日期">
+                <el-date-picker
+                  v-model="item.date"
+                  type="date"
+                  format="yyyy 年 MM 月 dd 日"
+                  value-format="timestamp"
+                  placeholder="选择日期"
+                >
                 </el-date-picker>
               </el-form-item>
               <el-form-item label="播放量">

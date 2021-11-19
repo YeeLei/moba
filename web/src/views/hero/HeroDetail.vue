@@ -276,7 +276,7 @@
                       "
                     ></span>
                   </div>
-                  <div class="date">{{ item.date.split('T')[0] }}</div>
+                  <div class="date">{{ item.date | formatDate('YYYY-MM-DD') }}</div>
                 </div>
               </div>
             </div>
