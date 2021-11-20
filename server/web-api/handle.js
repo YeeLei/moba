@@ -5,7 +5,7 @@ const CategoryModel = require('../models/category')
 const ArticleModel = require('../models/article')
 const HeroModel = require('../models/hero')
 const VideoModel = require('../models/video')
-
+const PicarticleModel = require('../models/picarticle')
 const response = require('../utils/response')
 const random = require('../utils/random')
 const awaitWrap = require('../utils/error')
@@ -88,12 +88,22 @@ module.exports = {
 
   // 文章详情
   async articleItemHandle(req, res) {
-    const item = await ArticleModel.findById(req.query.id).lean()
-    // 先把相关文章都查出来
-    const related = await ArticleModel.find().where({
-      categories: { $in: item.categories },
-      _id: { $nin: [req.query.id] }
-    })
+    let item = await ArticleModel.findById(req.query.id).lean()
+    let related
+    if (item === null) { // 是图文详情
+      item = await PicarticleModel.findById(req.query.id).lean()
+      related = await PicarticleModel.find().where({
+        categories: { $in: item.categories },
+        _id: { $nin: [req.query.id] }
+      })
+    } else {
+      // 把相关文章都查出来
+      related = await ArticleModel.find().where({
+        categories: { $in: item.categories },
+        _id: { $nin: [req.query.id] }
+      })
+    }
+
     // 随机插入两篇相关文章
     item.related = []
     let r1 = random(0, related.length - 1)
@@ -262,7 +272,7 @@ module.exports = {
           foreignField: 'category',
           as: 'videoList'
         }
-      },
+      }
     ])
 
     catesData.map(cate => {
@@ -275,9 +285,60 @@ module.exports = {
           return 1
         }
       })
+      cate.videoList = cate.videoList.slice(0, 4)
       return cate
     })
+
     response(res, 0, '获取首页视频数据成功', catesData)
+  },
+
+  // 攻略中心图文资讯二级分类
+  async picarticleCateHandle(req, res) {
+    const cate = await CategoryModel.find().where({ parent: '61985ee3c87743231e0e4d25' })
+    response(res, 0, '获取攻略中心图文资讯二级分类成功', cate)
+  },
+
+  // 攻略中心图文资讯文章
+  async picarticleHandle(req, res) {
+    const params = req.query.params
+    // 每页文章数量
+    const pageSize = 5
+    // 查询图文二级分类，以及属于该分类下的所有文章
+    let catesData = await CategoryModel.aggregate([
+      { $match: { parent: mongoose.Types.ObjectId('61985ee3c87743231e0e4d25') } },
+      {
+        $lookup: {
+          from: 'picarticles',
+          localField: '_id',
+          foreignField: 'categories',
+          as: 'picarticleList'
+        }
+      }
+    ])
+    // 根据params遍历 cateesDate截取每一个分类下的文章数量
+    catesData.forEach((item, i) => {
+      // 标记当前分类下的文章是否全部请求了
+      item.hasNext = true
+      let page = 1
+      params.forEach((par, j) => {
+        par = JSON.parse(par)
+        if (par.name == item.name) {
+          page = par.page
+          return
+        }
+      })
+      let skip = page * pageSize
+      // 请求的文章数量大于或等于最大数量
+      if (skip >= item.picarticleList.length) {
+        item.hasNext = false
+        skip = item.picarticleList.length
+      }
+      // 截取数组 0 - skip(不包括)
+      item.picarticleList = item.picarticleList.slice(0, skip)
+    })
+
+    response(res, 0, '获取攻略中心图文资讯文章成功', catesData)
+
   },
 
   // 赛事中心二级分类
@@ -291,7 +352,7 @@ module.exports = {
     const params = req.query.params
     // 每页文章数量
     const pageSize = 10
-    // 查询英雄二级分类，以及属于该分类下的所有文章
+    // 查询赛事二级分类，以及属于该分类下的所有文章
     let catesData = await CategoryModel.aggregate([
       { $match: { parent: mongoose.Types.ObjectId('61849eec73c5253352104d2b') } },
       {

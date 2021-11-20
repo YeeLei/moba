@@ -55,6 +55,60 @@ export function fetchArticleItem(params) {
   })
 }
 
+// 新建图文
+export function savePicarticle(data) {
+  return request({
+    url: '/picarticle/add',
+    method: 'post',
+    data
+  })
+}
+
+// 删除图文
+export function deletePicarticle(params) {
+  return request({
+    url: '/picarticle/delete',
+    method: 'delete',
+    params
+  })
+}
+
+// 修改图文
+export function updatePicarticle(data) {
+  return request({
+    url: '/picarticle/update',
+    method: 'put',
+    data
+  })
+}
+
+// 获取图文列表
+export function fetchPicarticle(params) {
+  return request({
+    url: '/picarticle/list',
+    method: 'get',
+    params
+  })
+}
+
+// 获取图文二级分类
+export function fetchPicarticleTwo(params) {
+  return request({
+    url: '/picarticle/cate',
+    method: 'get',
+    params
+  })
+}
+
+// 获取图文详情
+export function fetchPicarticleItem(params) {
+  return request({
+    url: '/picarticle/item',
+    method: 'get',
+    params
+  })
+}
+
 // 富文本编辑器文件上传
 export function uploadEditorFile(data) {
   return request({

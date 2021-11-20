@@ -90,6 +90,24 @@ export function fetchVideoListOne(params) {
   })
 }
 
+// 获取图文资讯二级分类
+export function fetchPicarticleCate(params) {
+  return request({
+    url: '/picarticle/cate',
+    method: 'get',
+    params
+  })
+}
+
+// 获取图文资讯的文章
+export function fetchPicarticle(params) {
+  return request({
+    url: '/picarticle',
+    method: 'get',
+    params
+  })
+}
+
 // 获取赛事中心的二级分类
 export function fetchMatchCate(params) {
   return request({

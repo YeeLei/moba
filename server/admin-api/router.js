@@ -73,6 +73,14 @@ router.get('/article/cate', handle.auth, handle.articleCateHandle)
 router.get('/article/list', handle.auth, handle.articleListHandle)
 router.get('/article/item', handle.auth, handle.articleItemHandle)
 
+//图文
+router.post('/picarticle/add', handle.auth, handle.picarticleEditHandle)
+router.delete('/picarticle/delete', handle.auth, handle.picarticleDeleteHandle)
+router.put('/picarticle/update', handle.auth, handle.picarticleEditHandle)
+router.get('/picarticle/cate', handle.auth, handle.picarticleCateHandle)
+router.get('/picarticle/list', handle.auth, handle.picarticleListHandle)
+router.get('/picarticle/item', handle.auth, handle.picarticleItemHandle)
+
 // 视频
 router.post('/video/add', handle.auth, handle.videoEditHandle)
 router.delete('/video/delete', handle.auth, handle.videoDeleteHandle)

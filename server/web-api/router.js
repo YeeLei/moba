@@ -35,6 +35,10 @@ router.get('/hero/cate', handle.heroCateHandle)
 router.get('/hero/listTwo', handle.heroListTwoHandle)
 // 首页视频数据
 router.get('/video/listOne', handle.videoListOneHandle)
+// 攻略中心图文资讯二级分类
+router.get('/picarticle/cate', handle.picarticleCateHandle)
+// 攻略中心图文资讯文章
+router.get('/picarticle', handle.picarticleHandle)
 // 赛事中心二级分类
 router.get('/match/cate', handle.matchCateHandle)
 // 赛事中心文章

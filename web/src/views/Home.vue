@@ -164,7 +164,7 @@
             :key="index"
           >
             <div class="cover">
-              <img :src="item.cover" class="cover-img" alt="cover" />
+              <img v-lazy="item.cover" class="cover-img" alt="cover" />
             </div>
             <div class="title">{{ item.title }}</div>
             <div class="info">

@@ -113,6 +113,25 @@ const routes = [
       },
 
       {
+        path: 'picarticleAdd',
+        name: 'picarticle-add',
+        component: () => import('@/views/resources/PicarticleEdit'),
+        meta: { title: '新建图文' }
+      },
+      {
+        path: 'picarticleList',
+        name: 'picarticle-list',
+        component: () => import('@/views/resources/PicarticleList'),
+        meta: { title: '图文列表' }
+      },
+      {
+        path: 'picarticleUpdate/:id',
+        name: 'picarticle-update',
+        props: true,
+        component: () => import('@/views/resources/PicarticleEdit'),
+        meta: { title: '编辑图文' }
+      },
+      {
         path: 'videoAdd',
         name: 'video-add',
         component: () => import('@/views/resources/VideoEdit'),

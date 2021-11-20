@@ -6,6 +6,7 @@ const HeroModel = require('../models/hero')
 const AdModel = require('../models/ad')
 const UserModel = require('../models/adminUser')
 const ArticleModel = require('../models/article')
+const PicarticleModel = require('../models/picarticle')
 const VideoModel = require('../models/video')
 
 const jwt = require('jsonwebtoken')
@@ -590,6 +591,77 @@ module.exports = {
       return
     }
     response(res, 0, '获取文章详情成功', item)
+  },
+
+  // ----- 添加或修改图文 -----
+  async picarticleEditHandle(req, res) {
+    const { id, title, body, pic, date, categories } = req.body
+    const isHave = await PicarticleModel.findOne({ title })
+    if (isHave && !id) {
+      response(res, 1, '该图文已存在')
+      return
+    }
+    let item, msg
+    if (id) {
+      // 修改图文
+      item = await PicarticleModel.findByIdAndUpdate(id, { title, body, pic, date, categories })
+      msg = '更新图文成功'
+    } else {
+      // 添加图文
+      item = await PicarticleModel.create({ title, body, pic, date, categories })
+      msg = '新建图文成功'
+    }
+    response(res, 0, msg, item)
+  },
+
+  // 删除图文
+  async picarticleDeleteHandle(req, res) {
+    const id = req.query.id
+    const item = await PicarticleModel.findByIdAndDelete(id)
+    response(res, 0, '删除图文成功', item)
+  },
+
+  // 获取图文二级分类
+  async picarticleCateHandle(req, res) {
+    const picarticleCate = await CategoryModel.find({
+      parent: '61985ee3c87743231e0e4d25'
+    })
+    response(res, 0, '获取图文二级分类成功', picarticleCate)
+  },
+
+  // 获取图文列表
+  async picarticleListHandle(req, res) {
+    // 获取第几页数据, 不传为第一页
+    let page = Number(req.query.page) ? Number(req.query.page) : 1
+    // 每页多少条数据, 不传获取5条
+    let pageSize = Number(req.query.pageSize) ? Number(req.query.pageSize) : 5
+    // 需要跳过的数据条数
+    let skip = (page - 1) * pageSize
+
+    // 构造查询对象
+    let title = req.query.title
+    let searchQuery = {}
+    if (title) {
+      searchQuery.title = new RegExp(title)  //  {  name: /xxxx/ }
+    }
+
+    // 数据库中图文总数
+    const picarticleTotal = await PicarticleModel.find(searchQuery).countDocuments()
+    const picarticleList = await PicarticleModel.find(searchQuery)
+      .populate('categories').setOptions(searchQuery).skip(skip).limit(pageSize).sort({ date: -1 })
+    response(res, 0, '获取图文列表成功', { picarticleTotal, picarticleList })
+  },
+
+  // 获取图文详情
+  async picarticleItemHandle(req, res) {
+    const id = req.query.id
+    const [err, item] = await awaitWrap(PicarticleModel.findById(id))
+    // 查询出错
+    if (err) {
+      res.status(422).send('服务器查询出错~')
+      return
+    }
+    response(res, 0, '获取图文详情成功', item)
   },
 
   // ----- 添加或更新视频

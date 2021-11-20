@@ -49,6 +49,10 @@
           <el-menu-item index="/resource/articleAdd">新建文章</el-menu-item>
           <el-menu-item index="/resource/articleList">文章列表</el-menu-item>
         </el-menu-item-group>
+        <el-menu-item-group title="图文">
+          <el-menu-item index="/resource/picarticleAdd">新建图文</el-menu-item>
+          <el-menu-item index="/resource/picarticleList">图文列表</el-menu-item>
+        </el-menu-item-group>
         <el-menu-item-group title="视频">
           <el-menu-item index="/resource/videoAdd">新建视频</el-menu-item>
           <el-menu-item index="/resource/videoList">视频列表</el-menu-item>

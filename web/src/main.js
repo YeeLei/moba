@@ -4,7 +4,14 @@ import router from './router'
 import store from './store'
 import dayjs from 'dayjs'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+import VueLazyload from 'vue-lazyload'
 
+import fastclick from 'fastclick'
+fastclick.attach(document.body)
+
+Vue.use(VueLazyload, {
+  loading: require('./assets/images/pic.jpg')
+})
 // 导入全局样式文件
 import './assets/stylus/index.styl'
 

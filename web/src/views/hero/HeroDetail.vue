@@ -256,7 +256,7 @@
               @click="videoPlay(item)"
             >
               <div class="cover">
-                <img :src="item.cover" class="cover-img" alt="cover" />
+                <img v-lazy="item.cover" class="cover-img" alt="cover" />
                 <img src="../../assets/images/video-img.png" class="play-img" alt="video-img" />
               </div>
               <div class="info">

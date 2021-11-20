@@ -33,7 +33,7 @@
             <div class="video" :class="{ down: foldRank }">
               <div class="video-item video-item-1" @click="videoPlay(item.videoList[0])">
                 <div class="cover">
-                  <img :src="item.videoList[0].cover" class="cover-img" alt="cover" />
+                  <img v-lazy="item.videoList[0].cover" class="cover-img" alt="cover" />
                 </div>
                 <div class="info">
                   <div class="title">{{ '1. ' + item.videoList[0].title }}</div>
@@ -136,7 +136,7 @@
             @click="videoPlay(item)"
           >
             <div class="cover">
-              <img :src="item.cover" class="cover-img" alt="cover" />
+              <img v-lazy="item.cover" class="cover-img" alt="cover" />
               <img src="../assets/images/video-img.png" class="play-img" alt="play-img" />
             </div>
             <div class="title">{{ item.title }}</div>
@@ -165,7 +165,7 @@
             @click="videoPlay(item)"
           >
             <div class="cover">
-              <img :src="item.cover" class="cover-img" alt="cover" />
+              <img v-lazy="item.cover" class="cover-img" alt="cover" />
             </div>
             <div class="info">
               <div class="t1">{{ item.title }}</div>
@@ -218,13 +218,75 @@
       <!-- end of body -->
     </div>
     <!-- end of hero-card -->
+    <div class="picarticle-cart">
+      <div class="picarticle-header">
+        <i class="icon"></i>
+        <div class="title">图文攻略</div>
+      </div>
+      <div class="picarticle-body">
+        <div class="nav">
+          <div
+            class="nav-item"
+            :class="{ active: active == index }"
+            v-for="(item, index) in picarticleCate"
+            :key="index"
+            @click="toggleNav(index)"
+          >
+            <span class="nav-link">{{ item.name }}</span>
+          </div>
+        </div>
+        <!-- end of nav -->
+        <div class="content">
+          <div class="picarticle-wrap">
+            <swiper ref="mySwiper" :options="options">
+              <swiper-slide v-for="(item, index) in picarticleList" :key="index">
+                <router-link
+                  tag="div"
+                  class="picarticle-item"
+                  v-for="(picarticle, index) in item.picarticleList"
+                  :key="index"
+                  :to="`/article/detail/${picarticle._id}`"
+                >
+                  <div class="cover">
+                    <img v-lazy="picarticle.pic" class="cover-img" />
+                  </div>
+                  <div class="info">
+                    <div class="t1">{{ picarticle.title }}</div>
+                  </div>
+                  <div class="date">
+                    {{ picarticle.date | formatDate('YYYY-MM-DD') }}
+                  </div>
+                </router-link>
+                <div class="next">
+                  <button class="next-btn radius-large" @click="loadMore">
+                    {{ btnText(item.hasNext) }}
+                  </button>
+                </div>
+              </swiper-slide>
+            </swiper>
+          </div>
+        </div>
+      </div>
+      <!-- end of body -->
+    </div>
+    <!-- end of picarticle-card -->
   </div>
 </template>
 
 <script>
-import { fetchStrategyAds, fetchVideoRank, fetchHeroListOne, fetchHero } from '@/api/index'
+import CardList from '@/components/CardList'
+import minxins_swiper from '@/assets/javascript/mixins_swiper'
+import {
+  fetchStrategyAds,
+  fetchVideoRank,
+  fetchHeroListOne,
+  fetchHero,
+  fetchPicarticleCate,
+  fetchPicarticle,
+} from '@/api/index'
 export default {
   name: 'Strategy',
+  mixins: [minxins_swiper],
   data() {
     return {
       strategyAds: [], // 广告数据
@@ -266,6 +328,11 @@ export default {
           },
         },
       },
+      picarticleCate: [], // 图文导航分类数据
+      picarticleList: [], // 图文数据
+      params: [], // 请求参数
+      active: 0, // 当前选中的导航
+      busy: false, //  false为可以触发滚动加载
     }
   },
   created() {
@@ -274,9 +341,27 @@ export default {
     this.fetchHeroListOne()
   },
   mounted() {
-    this.fetchStrategyAds()
-    this.fetchVideoRank()
-    this.fetchHeroListOne()
+    this.fetchPicarticleCate()
+    window.addEventListener('scroll', this.scrollEvent)
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.scrollEvent, false)
+  },
+  computed: {
+    // 加载按钮的显示文本
+    btnText() {
+      return (hasNext) => {
+        let text = ''
+        if (!hasNext) {
+          text = '已显示全部内容'
+        } else if (hasNext && this.busy) {
+          text = '正在加载...'
+        } else {
+          text = '下拉加载更多'
+        }
+        return text
+      }
+    },
   },
   methods: {
     // 获取英雄详情
@@ -331,6 +416,48 @@ export default {
       this.foldDrop = true
       this.fetchHero(hero._id)
     },
+    // 获取图文资讯二级分类
+    async fetchPicarticleCate() {
+      const cate = await fetchPicarticleCate()
+      this.picarticleCate = cate.data
+      // 构造文章请求参数
+      this.picarticleCate.forEach((cate, index) => {
+        this.params.push({
+          name: cate.name,
+          page: 1,
+        })
+      })
+      this.fetchPicarticle()
+    },
+    // 获取图文资讯文章
+    async fetchPicarticle() {
+      this.busy = true
+      const picarticle = await fetchPicarticle({ params: this.params })
+      this.busy = false
+      this.picarticleList = picarticle.data
+    },
+    // 获取下一页数据
+    loadMore() {
+      if (!this.picarticleList[this.active].hasNext) return
+      this.params[this.active].page++
+      this.fetchPicarticle()
+    },
+    // 滚动触发函数
+    scrollEvent() {
+      let pageHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight)
+      let viewportHeight =
+        window.innerHeight ||
+        document.documentElement.clientHeight ||
+        document.body.clientHeight ||
+        0
+      let scrollHeight =
+        window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
+      let loading = pageHeight - viewportHeight - scrollHeight < 30
+      if (loading && !this.busy) this.loadMore()
+    },
+  },
+  components: {
+    'm-card-list': CardList,
   },
 }
 </script>
@@ -340,12 +467,12 @@ export default {
 @import '../assets/stylus/mixins.styl';
 
 #strategy {
-  .rank-card, .hero-card {
+  .rank-card, .hero-card, .picarticle-cart {
     background-color: $white;
     margin-top: 1rem;
     padding: 0 1.2rem;
 
-    .rank-header, .hero-header {
+    .rank-header, .hero-header, .picarticle-header {
       padding: 1.5rem 0;
       flex-align(flex-start);
       height: 2rem;
@@ -744,6 +871,111 @@ export default {
             color: $white;
             background-color: $orange;
           }
+        }
+      }
+    }
+  }
+
+  .picarticle-header {
+    .icon {
+      background-image: url('../assets/images/icon/icon_news.jpg') !important;
+    }
+  }
+
+  .picarticle-body {
+    position: relative;
+
+    .nav {
+      padding: 0 1rem;
+      flex-align();
+
+      .nav-item {
+        position: relative;
+        flex-shrink: 0;
+        margin: 0 1.2rem;
+        padding: 1.4rem 0;
+        font-size: $font-sm;
+        color: $dark;
+
+        &:after {
+          content: '';
+          pos-base(absolute, 0, auto, 100%, 0.25rem, auto, 0);
+          background-color: transparent;
+        }
+
+        &.active:after {
+          background-color: $orange-d5;
+        }
+
+        &.active {
+          color: $orange-d5;
+        }
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+    .picarticle-wrap {
+      .picarticle-item {
+        flex-align(flex-start, flex-start);
+        padding: 1.2rem 0;
+        border-bottom();
+
+        .cover {
+          margin-right: 1.5rem;
+
+          .cover-img {
+            display: block;
+            border-radius: 0.3rem;
+            width: 116px;
+          }
+        }
+
+        .info {
+          flex: 1;
+          overflow: hidden;
+
+          .t1 {
+            color: $dark-34;
+            font-size: $font-m;
+            height: 20px;
+            line-height: 20px;
+            overflow: hidden;
+          }
+
+          .t2 {
+            color: $grey-7a;
+            margin-bottom: 1rem;
+            padding-top: 0.5rem;
+          }
+        }
+
+        .date {
+          position: absolute;
+          right: 0;
+          bottom: 3px;
+          font-size: $font-xxs;
+          color: $grey-7a;
+        }
+      }
+
+      .next {
+        height: 3rem;
+        padding: 0 0.7rem;
+        margin-bottom: 1.5rem;
+
+        .next-btn {
+          width: 100%;
+          height: 3.5rem;
+          line-height: 3.5rem;
+          color: $grey-85;
+          font-size: $font-xs;
         }
       }
     }

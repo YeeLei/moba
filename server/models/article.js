@@ -1,4 +1,4 @@
-// goods 集合(表) 定义文件
+// article 集合(表) 定义文件
 const mongoose = require('./db')
 
 const ArticleSchema = mongoose.Schema({

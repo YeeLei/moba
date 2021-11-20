@@ -14,6 +14,7 @@
       <!-- <div class="download"></div> -->
     </div>
     <!-- end of topbar -->
+
     <div class="nav">
       <div class="nav-item" v-for="(item, index) in indexItems" :key="index">
         <router-link class="nav-link" :to="`${item.url}`">{{ item.title }}</router-link>

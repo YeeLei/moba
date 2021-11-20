@@ -1,5 +1,5 @@
 export default {
-  data () {
+  data() {
     return {
       options: {
         // 每个swiper项高度自动撑开
@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     // 导航切换
-    toggleNav (index) {
+    toggleNav(index) {
       this.active = index
       this.$refs.mySwiper.$swiper.slideTo(index, 300, false)
     }
