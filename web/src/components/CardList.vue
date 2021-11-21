@@ -59,6 +59,11 @@ export default {
 @import '../assets/stylus/mixins.styl';
 
 .card-list {
+  width: 96%;
+  margin: 0 auto;
+  border-radius: 0.5rem;
+  overflow: hidden;
+
   .nav {
     flex-align();
     font-size: $font-sm;

@@ -218,7 +218,7 @@ export default {
           el: '.swiper-pagination',
         },
         // 滑动时间
-        speed: 700,
+        speed: 500,
         // 自动播放
         autoplay: {
           delay: 3000,
@@ -303,10 +303,25 @@ export default {
 @import '../assets/stylus/mixins.styl';
 
 #home {
+  .ads-wrap {
+    width: 96%;
+    overflow: hidden;
+    margin: 1rem auto;
+
+    .swiper-container {
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+  }
+
   .icon-wrap {
+    width: 96%;
+    margin: 0 auto;
     margin-top: 1rem;
     padding-top: 1rem;
     background-color: $white;
+    border-radius: 0.5rem;
+    overflow: hidden;
 
     .icon {
       flex-align(space-between, flex-start);
@@ -460,6 +475,10 @@ export default {
 
   .banner {
     margin-top: 1.5rem;
+
+    .swiper-container {
+      border-radius: 0.4rem;
+    }
 
     .news-hero {
       display: block;

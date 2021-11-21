@@ -55,10 +55,10 @@ export default {
 @import '../assets/stylus/mixins.styl';
 
 .card {
+  border-radius: 0.5rem;
   background-color: $white;
   margin-top: 1rem;
   padding: 0 1.7rem;
-  border-bottom($grey-9e);
 
   .card-header {
     padding: 1.5rem 0;

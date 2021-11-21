@@ -169,6 +169,9 @@ export default {
 @import '../assets/stylus/mixins.styl';
 
 #match {
+  width: 96%;
+  margin: 0 auto;
+
   .nav {
     flex-align();
     overflow: auto;

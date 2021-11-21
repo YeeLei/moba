@@ -16,13 +16,13 @@
         <i class="icon"></i>
         <div class="title">热门视频</div>
         <div class="cates">
-          <span class="cate cate-day" :class="{ active: active == 0 }" @click="toggleNav(0)"
+          <span class="cate cate-day" :class="{ active: active2 === 0 }" @click="toggleNav(0)"
             >日</span
           >
-          <span class="cate cate-week" :class="{ active: active == 1 }" @click="toggleNav(1)"
+          <span class="cate cate-week" :class="{ active: active2 === 1 }" @click="toggleNav(1)"
             >周</span
           >
-          <span class="cate cate-month" :class="{ active: active == 2 }" @click="toggleNav(2)"
+          <span class="cate cate-month" :class="{ active: active2 === 2 }" @click="toggleNav(2)"
             >月</span
           >
         </div>
@@ -124,9 +124,12 @@
             胜率排名
             <span class="winrank">62</span>
           </div>
-          <router-link tag="div" :to="`/hero/detail/${hotSelect._id}`" class="detail-link">
-            查看英雄详细介绍 &gt;
+          <router-link tag="a" :to="`/hero/detail/${hotSelect._id}`" class="detail-link"
+            >查看英雄详细介绍 &gt;
           </router-link>
+        </div>
+        <div class="text" v-if="!heroVideo.length > 0" style="color: #7a7a80; padding: 0.5rem">
+          此英雄暂无攻略.
         </div>
         <div class="hot-video-1">
           <div
@@ -227,10 +230,10 @@
         <div class="nav">
           <div
             class="nav-item"
-            :class="{ active: active == index }"
+            :class="{ active: active1 == index }"
             v-for="(item, index) in picarticleCate"
             :key="index"
-            @click="toggleNav(index)"
+            @click="toggleNav1(index)"
           >
             <span class="nav-link">{{ item.name }}</span>
           </div>
@@ -238,7 +241,7 @@
         <!-- end of nav -->
         <div class="content">
           <div class="picarticle-wrap">
-            <swiper ref="mySwiper" :options="options">
+            <swiper ref="mySwiper1" :options="options1">
               <swiper-slide v-for="(item, index) in picarticleList" :key="index">
                 <router-link
                   tag="div"
@@ -252,6 +255,7 @@
                   </div>
                   <div class="info">
                     <div class="t1">{{ picarticle.title }}</div>
+                    <div class="t2 text-ellipsis">{{ picarticle.title }}</div>
                   </div>
                   <div class="date">
                     {{ picarticle.date | formatDate('YYYY-MM-DD') }}
@@ -275,7 +279,6 @@
 
 <script>
 import CardList from '@/components/CardList'
-import minxins_swiper from '@/assets/javascript/mixins_swiper'
 import {
   fetchStrategyAds,
   fetchVideoRank,
@@ -286,7 +289,6 @@ import {
 } from '@/api/index'
 export default {
   name: 'Strategy',
-  mixins: [minxins_swiper],
   data() {
     return {
       strategyAds: [], // 广告数据
@@ -294,7 +296,7 @@ export default {
       heroList: [], // 英雄数据
       hotSelect: {}, // 英雄攻略中选中的英雄
       heroVideo: [], // 英雄视频
-      active: 0, // 当前选中的视频排行类型
+      active2: 0, // 当前选中的视频排行类型
       activeHeroCate: 0, // 下拉列表中选中的英雄类型
       dropHeroCate: [], // 下拉列表分类
       foldDrop: true, // 控制英雄列表的折叠
@@ -305,7 +307,7 @@ export default {
           el: '.swiper-pagination',
         },
         // 滑动时间
-        speed: 700,
+        speed: 500,
         // 自动播放
         autoplay: {
           delay: 3000,
@@ -323,15 +325,27 @@ export default {
           slideChangeTransitionStart: () => {
             let swiper = this.$refs.mySwiper.$swiper
             let activeIndex = swiper.activeIndex
-            this.active = activeIndex
+            this.active2 = activeIndex
             this.foldRank = true
+          },
+        },
+      },
+      options1: {
+        // 每个swiper项高度自动撑开
+        autoHeight: true,
+        on: {
+          // swiper从当前slide开始过渡到另一个slide时执行
+          slideChangeTransitionStart: () => {
+            let swiper = this.$refs.mySwiper1.$swiper
+            let activeIndex = swiper.activeIndex
+            this.active1 = activeIndex
           },
         },
       },
       picarticleCate: [], // 图文导航分类数据
       picarticleList: [], // 图文数据
       params: [], // 请求参数
-      active: 0, // 当前选中的导航
+      active1: 0, // 当前选中的导航
       busy: false, //  false为可以触发滚动加载
     }
   },
@@ -394,9 +408,13 @@ export default {
     },
     // 导航切换
     toggleNav(index) {
-      this.active = index
+      this.active2 = index
       this.foldRank = true
       this.$refs.mySwiper.$swiper.slideTo(index, 300, false)
+    },
+    toggleNav1(index) {
+      this.active1 = index
+      this.$refs.mySwiper1.$swiper.slideTo(index, 300, false)
     },
     // 跳转到视频播放页
     videoPlay(item) {
@@ -467,6 +485,19 @@ export default {
 @import '../assets/stylus/mixins.styl';
 
 #strategy {
+  width: 96%;
+  margin: 0 auto;
+
+  .ads-wrap {
+    overflow: hidden;
+    margin: 1rem auto;
+
+    .swiper-container {
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+  }
+
   .rank-card, .hero-card, .picarticle-cart {
     background-color: $white;
     margin-top: 1rem;
@@ -671,7 +702,6 @@ export default {
       span {
         position: relative;
         padding: 0 0.5rem 0 0.3rem;
-        margin-right: 0.3rem;
 
         &:after {
           content: '';
