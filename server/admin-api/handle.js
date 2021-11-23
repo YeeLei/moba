@@ -451,6 +451,7 @@ module.exports = {
   async userEditHandle(req, res) {
     // 获取管理员信息
     const { id, email, password, name, avatar } = req.body
+    console.log(id);
     const isHave = await UserModel.findOne({ email })
     // 如果是添加, 有邮箱同名的不允许添加
     if (isHave && !id) {
@@ -505,7 +506,7 @@ module.exports = {
 
   // ----- 添加或修改文章 -----
   async articleEditHandle(req, res) {
-    const { id, title, body, hot, date, categories } = req.body
+    const { id, title, body, hot, author, date, categories } = req.body
     const isHave = await ArticleModel.findOne({ title })
     if (isHave && !id) {
       response(res, 1, '该文章已存在')
@@ -518,7 +519,7 @@ module.exports = {
       msg = '更新文章成功'
     } else {
       // 添加文章
-      item = await ArticleModel.create({ title, body, hot, date, categories })
+      item = await ArticleModel.create({ title, body, hot, author, date, categories })
       msg = '新建文章成功'
     }
     response(res, 0, msg, item)
@@ -595,7 +596,7 @@ module.exports = {
 
   // ----- 添加或修改图文 -----
   async picarticleEditHandle(req, res) {
-    const { id, title, body, pic, date, categories } = req.body
+    const { id, title, body, pic, author, date, categories } = req.body
     const isHave = await PicarticleModel.findOne({ title })
     if (isHave && !id) {
       response(res, 1, '该图文已存在')
@@ -608,7 +609,7 @@ module.exports = {
       msg = '更新图文成功'
     } else {
       // 添加图文
-      item = await PicarticleModel.create({ title, body, pic, date, categories })
+      item = await PicarticleModel.create({ title, body, pic, author, date, categories })
       msg = '新建图文成功'
     }
     response(res, 0, msg, item)
@@ -666,7 +667,7 @@ module.exports = {
 
   // ----- 添加或更新视频
   async videoEditHandle(req, res) {
-    const { id, title, cover, video, play, category, date } = req.body
+    const { id, title, cover, video, play, author, category, date } = req.body
     const isHave = await VideoModel.findOne({ title })
     if (isHave && !id) {
       response(res, 1, '该视频已存在')
@@ -679,7 +680,7 @@ module.exports = {
       msg = '更新视频成功'
     } else {
       // 添加视频
-      item = await VideoModel.create({ title, cover, video, play, category, date })
+      item = await VideoModel.create({ title, cover, video, play, author, category, date })
       msg = '新建视频成功'
     }
     response(res, 0, msg, item)

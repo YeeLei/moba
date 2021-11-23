@@ -89,9 +89,12 @@ module.exports = {
   // 文章详情
   async articleItemHandle(req, res) {
     let item = await ArticleModel.findById(req.query.id).lean()
+
     let related
     if (item === null) { // 是图文详情
       item = await PicarticleModel.findById(req.query.id).lean()
+      let hits = item.hits + 1
+      await PicarticleModel.findByIdAndUpdate(item._id, { hits })
       related = await PicarticleModel.find().where({
         categories: { $in: item.categories },
         _id: { $nin: [req.query.id] }
@@ -104,6 +107,8 @@ module.exports = {
       })
     }
 
+    let hits = item.hits + 1
+    await ArticleModel.findByIdAndUpdate(item._id, { hits })
     // 随机插入两篇相关文章
     item.related = []
     let r1 = random(0, related.length - 1)

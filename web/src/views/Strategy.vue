@@ -16,13 +16,13 @@
         <i class="icon"></i>
         <div class="title">热门视频</div>
         <div class="cates">
-          <span class="cate cate-day" :class="{ active: active2 === 0 }" @click="toggleNav(0)"
+          <span class="cate cate-day" :class="{ active: active === 0 }" @click="toggleNav(0)"
             >日</span
           >
-          <span class="cate cate-week" :class="{ active: active2 === 1 }" @click="toggleNav(1)"
+          <span class="cate cate-week" :class="{ active: active === 1 }" @click="toggleNav(1)"
             >周</span
           >
-          <span class="cate cate-month" :class="{ active: active2 === 2 }" @click="toggleNav(2)"
+          <span class="cate cate-month" :class="{ active: active === 2 }" @click="toggleNav(2)"
             >月</span
           >
         </div>
@@ -124,8 +124,8 @@
             胜率排名
             <span class="winrank">62</span>
           </div>
-          <router-link tag="a" :to="`/hero/detail/${hotSelect._id}`" class="detail-link"
-            >查看英雄详细介绍 &gt;
+          <router-link tag="div" :to="`/hero/detail/${hotSelect._id}`" class="detail-link">
+            查看英雄详细介绍 &gt;
           </router-link>
         </div>
         <div class="text" v-if="!heroVideo.length > 0" style="color: #7a7a80; padding: 0.5rem">
@@ -279,6 +279,7 @@
 
 <script>
 import CardList from '@/components/CardList'
+// import minxins_swiper from '@/assets/javascript/mixins_swiper'
 import {
   fetchStrategyAds,
   fetchVideoRank,
@@ -289,6 +290,7 @@ import {
 } from '@/api/index'
 export default {
   name: 'Strategy',
+  // mixins: [minxins_swiper],
   data() {
     return {
       strategyAds: [], // 广告数据
@@ -296,7 +298,7 @@ export default {
       heroList: [], // 英雄数据
       hotSelect: {}, // 英雄攻略中选中的英雄
       heroVideo: [], // 英雄视频
-      active2: 0, // 当前选中的视频排行类型
+      active: 0, // 当前选中的视频排行类型
       activeHeroCate: 0, // 下拉列表中选中的英雄类型
       dropHeroCate: [], // 下拉列表分类
       foldDrop: true, // 控制英雄列表的折叠
@@ -316,16 +318,20 @@ export default {
         },
         // 循环播放
         loop: true,
+        observer: true,
+        observeParents: true,
       },
       options: {
         // 每个swiper项高度自动撑开
         autoHeight: true,
+        observer: true,
+        observeParents: true,
         on: {
           // swiper从当前slide开始过渡到另一个slide时执行
           slideChangeTransitionStart: () => {
             let swiper = this.$refs.mySwiper.$swiper
             let activeIndex = swiper.activeIndex
-            this.active2 = activeIndex
+            this.active = activeIndex
             this.foldRank = true
           },
         },
@@ -333,6 +339,8 @@ export default {
       options1: {
         // 每个swiper项高度自动撑开
         autoHeight: true,
+        observer: true,
+        observeParents: true,
         on: {
           // swiper从当前slide开始过渡到另一个slide时执行
           slideChangeTransitionStart: () => {
@@ -403,12 +411,11 @@ export default {
     },
     // 获取选中的英雄攻略视频
     fetchHeroStrategies(item) {
-      // console.log(item.strategies)
       this.heroVideo = item.strategies
     },
     // 导航切换
     toggleNav(index) {
-      this.active2 = index
+      this.active = index
       this.foldRank = true
       this.$refs.mySwiper.$swiper.slideTo(index, 300, false)
     },
@@ -499,6 +506,7 @@ export default {
   }
 
   .rank-card, .hero-card, .picarticle-cart {
+    border-radius: 0.5rem;
     background-color: $white;
     margin-top: 1rem;
     padding: 0 1.2rem;
@@ -702,6 +710,7 @@ export default {
       span {
         position: relative;
         padding: 0 0.5rem 0 0.3rem;
+        margin-right: 0.3rem;
 
         &:after {
           content: '';

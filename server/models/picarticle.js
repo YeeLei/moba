@@ -7,6 +7,8 @@ const PicarticleSchema = new mongoose.Schema(
     pic: { type: String },
     body: { type: String },
     categories: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'Category' }],
+    author: { type: String },
+    hits: { type: Number, default: 0 },
     // 默认值是文章创建时间,存储的是时间戳
     date: {
       type: String,

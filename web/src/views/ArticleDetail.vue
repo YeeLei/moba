@@ -8,8 +8,13 @@
       <div class="date">{{ articleDetail.date | formatDate('YYYY-MM-DD') }}</div>
     </div>
     <!-- end of header -->
-
-    <div class="body" v-html="articleDetail.body"></div>
+    <div class="detail-data">
+      <div class="data-name">作者: {{ articleDetail.author }}</div>
+      <div class="data-view">{{ articleDetail.hits }}次阅读</div>
+    </div>
+    <div class="body">
+      <div class="content" v-html="articleDetail.body"></div>
+    </div>
     <!-- end of body -->
 
     <div
@@ -75,7 +80,6 @@ export default {
   .header {
     flex-align(flex-start);
     height: 3.7rem;
-    margin-bottom: 1rem;
     border-bottom($grey-99);
 
     .back-icon {
@@ -97,6 +101,20 @@ export default {
       margin-left: 1rem;
       font-size: $font-xxs;
       color: $grey-9f;
+    }
+  }
+
+  .detail-data {
+    flex-align(flex-start);
+    margin-bottom: 1rem;
+    padding: 0 3rem;
+    height: 30px;
+    line-height: 30px;
+    font-size: $font-sm;
+    color: #9e9c8e;
+
+    .data-name {
+      flex: 1;
     }
   }
 

@@ -5,6 +5,8 @@ const ArticleSchema = mongoose.Schema({
   title: { type: String },
   body: { type: String },
   categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
+  author: { type: String },
+  hits: { type: Number, default: 0 },
   // 默认值是文章创建时间,存储的是时间戳
   date: {
     type: String,
