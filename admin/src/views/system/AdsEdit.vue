@@ -28,6 +28,7 @@
                 :show-file-list="false"
                 :headers="uploadHeaders"
                 :on-success="uploadAds"
+                :before-upload="beforeUpload"
               >
                 <img
                   v-if="item.image"

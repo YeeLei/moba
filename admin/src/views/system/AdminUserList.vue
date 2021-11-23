@@ -52,7 +52,7 @@ export default {
     },
     // 删除管理员
     async deleteUser(row) {
-      this.$confirm(`确认要删除管理员"${row.username}"?`, '提示', {
+      this.$confirm(`确认要删除管理员"${row.name}"?`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',

@@ -53,6 +53,7 @@
               :show-file-list="false"
               :headers="uploadHeaders"
               :on-success="uploadAvatar"
+              :before-upload="beforeUpload"
             >
               <img v-if="model.avatar" :src="model.avatar" class="avatar" />
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -65,6 +66,7 @@
               :show-file-list="false"
               :headers="uploadHeaders"
               :on-success="uploadBanner"
+              :before-upload="beforeUpload"
             >
               <img v-if="model.banner" :src="model.banner" class="banner" />
               <i v-else class="el-icon-plus banner-uploader-icon"></i>
@@ -112,6 +114,7 @@
               :show-file-list="false"
               :headers="uploadHeaders"
               :on-success="uploadImage"
+              :before-upload="beforeUpload"
             >
               <img v-if="model.showImage" :src="model.showImage" class="banner" />
               <i v-else class="el-icon-plus banner-uploader-icon"></i>
@@ -163,6 +166,7 @@
                   :show-file-list="false"
                   :headers="uploadHeaders"
                   :on-success="uploadSkill"
+                  :before-upload="beforeUpload"
                 >
                   <img v-if="item.icon" :src="item.icon" class="avatar" />
                   <i
@@ -213,6 +217,7 @@
                   :show-file-list="false"
                   :headers="uploadHeaders"
                   :on-success="uploadSkin"
+                  :before-upload="beforeUpload"
                 >
                   <img v-if="item.banner" :src="item.banner" class="banner" />
                   <i
@@ -378,6 +383,7 @@
                   :show-file-list="false"
                   :headers="uploadHeaders"
                   :on-success="uploadStrategy"
+                  :before-upload="beforeUpload"
                 >
                   <img v-if="item.cover" :src="item.cover" class="banner" />
                   <i

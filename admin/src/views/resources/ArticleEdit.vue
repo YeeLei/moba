@@ -61,6 +61,7 @@ export default {
         body: '',
         hot: false,
         categories: [],
+        author: JSON.parse(localStorage.getItem('user'))['name'] || '',
       },
       articleCate: [],
     }
@@ -74,6 +75,7 @@ export default {
         this.model.body = ''
         this.model.categories = []
         this.model.hot = false
+        this.model.author = ''
       }
     },
   },
@@ -84,7 +86,7 @@ export default {
   methods: {
     // 保存文章
     async save() {
-      const { title, body, categories, hot, date } = this.model
+      const { title, body, categories, author, hot, date } = this.model
       const id = this.id
       // 名字不能为空
       if (!title) {
@@ -109,7 +111,7 @@ export default {
       if (id) {
         res = await updateArticle({ id, title, body, categories, hot, date })
       } else {
-        res = await saveArticle({ title, body, categories, hot, date })
+        res = await saveArticle({ title, body, categories, author, hot, date })
       }
       // 该文章已存在
       if (res.status == 1) {

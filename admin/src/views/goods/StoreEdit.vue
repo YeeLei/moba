@@ -22,6 +22,7 @@
         :show-file-list="false"
         :headers="uploadHeaders"
         :on-success="uploadSuccess"
+        :before-upload="beforeUpload"
       >
         <img v-if="model.icon" :src="model.icon" class="avatar" />
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>

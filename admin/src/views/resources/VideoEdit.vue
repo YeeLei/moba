@@ -37,6 +37,7 @@
             :show-file-list="false"
             :headers="uploadHeaders"
             :on-success="uploadVideo"
+            :before-upload="beforeUpload"
           >
             <img v-if="model.cover" :src="model.cover" class="banner" />
             <i v-else class="el-icon-plus banner-uploader-icon"></i>
@@ -78,6 +79,7 @@ export default {
         play: '',
         cover: '',
         video: '',
+        author: JSON.parse(localStorage.getItem('user'))['name'] || '',
       },
       videoCate: [], // 视频分类
     }
@@ -92,6 +94,7 @@ export default {
         this.model.category = ''
         this.model.cover = ''
         this.video = ''
+        this.model.author = ''
       }
     },
   },
@@ -102,7 +105,7 @@ export default {
   methods: {
     // 保存视频
     async save() {
-      const { title, play, category, cover, video, date } = this.model
+      const { title, play, category, author, cover, video, date } = this.model
       const id = this.id
       // 名字不能为空
       if (!title || !play || !category || !cover || !video || !date) {
@@ -114,7 +117,7 @@ export default {
       if (id) {
         res = await updateVideo({ id, title, play, category, cover, video, date })
       } else {
-        res = await saveVideo({ title, play, category, cover, video, date })
+        res = await saveVideo({ title, play, category, author, cover, video, date })
       }
       // 该视频已存在
       if (res.status == 1) {

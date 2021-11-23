@@ -20,6 +20,7 @@
         :show-file-list="false"
         :headers="uploadHeaders"
         :on-success="onSuccess"
+        :before-upload="beforeUpload"
       >
         <img v-if="model.avatar" :src="model.avatar" class="avatar" />
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -89,12 +90,17 @@ export default {
       //根据id判断是新建还是编辑
       let res
       if (id) {
+        const { _id } = JSON.parse(localStorage.getItem('user'))
         res = await updateUser({ id, email, password, name, avatar })
+        if (id == _id) {
+          localStorage.removeItem('user')
+          localStorage.removeItem('token')
+        }
       } else {
         res = await saveUser({ email, password, name, avatar })
       }
       // 该管理员已存在
-      if (res.status == 1) {
+      if (res.status === 1) {
         this.$message.error(res.msg)
         return
       }

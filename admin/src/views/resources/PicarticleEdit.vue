@@ -34,6 +34,7 @@
             :show-file-list="false"
             :headers="uploadHeaders"
             :on-success="picUploadSuccess"
+            :before-upload="beforeUpload"
           >
             <img v-if="model.pic" :src="model.pic" class="banner" />
             <i v-else class="el-icon-plus banner-uploader-icon"></i>
@@ -72,6 +73,7 @@ export default {
         body: '',
         pic: '',
         categories: [],
+        author: JSON.parse(localStorage.getItem('user'))['name'] || '',
       },
       picarticleCate: [],
     }
@@ -85,6 +87,7 @@ export default {
         this.model.body = ''
         this.model.categories = []
         this.model.pic = ''
+        this.model.author = ''
       }
     },
   },
@@ -95,7 +98,7 @@ export default {
   methods: {
     // 保存文章
     async save() {
-      const { title, body, categories, pic, date } = this.model
+      const { title, body, categories, author, pic, date } = this.model
       const id = this.id
       // 名字不能为空
       if (!title) {
@@ -120,7 +123,7 @@ export default {
       if (id) {
         res = await updatePicarticle({ id, title, body, categories, pic, date })
       } else {
-        res = await savePicarticle({ title, body, categories, pic, date })
+        res = await savePicarticle({ title, body, author, categories, pic, date })
       }
       // 该图文已存在
       if (res.status === 1) {

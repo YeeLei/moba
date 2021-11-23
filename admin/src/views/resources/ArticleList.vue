@@ -18,9 +18,10 @@
 
     <el-table :data="articleList" border style="width: 100%">
       <el-table-column prop="number" label="编号" width="70"> </el-table-column>
-      <el-table-column prop="title" label="文章标题" width="500"> </el-table-column>
+      <el-table-column prop="title" label="文章标题" width="300"> </el-table-column>
       <el-table-column prop="categories" :formatter="categoryFormat" label="所属分类" width="280">
       </el-table-column>
+      <el-table-column prop="author" label="作者" width="200"> </el-table-column>
       <el-table-column prop="date" label="上传时间" width="220" sortable> </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">

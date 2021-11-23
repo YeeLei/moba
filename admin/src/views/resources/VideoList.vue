@@ -16,11 +16,12 @@
       </el-input>
     </div>
     <el-table :data="videoList" border style="width: 100%">
-      <el-table-column prop="number" label="编号" width="150"> </el-table-column>
-      <el-table-column prop="title" label="视频标题" width="400"> </el-table-column>
-      <el-table-column prop="category" :formatter="categoryFormat" label="所属分类" width="280">
+      <el-table-column prop="number" label="编号" width="50"> </el-table-column>
+      <el-table-column prop="title" label="视频标题" width="300"> </el-table-column>
+      <el-table-column prop="category" :formatter="categoryFormat" label="所属分类" width="300">
       </el-table-column>
-      <el-table-column prop="date" label="创建时间" width="220" sortable> </el-table-column>
+      <el-table-column prop="author" label="作者" width="200"> </el-table-column>
+      <el-table-column prop="date" label="创建时间" width="200" sortable> </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="mini" @click="$router.push(`/resource/videoUpdate/${scope.row._id}`)"
