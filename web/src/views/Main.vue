@@ -4,7 +4,7 @@
       <div class="logo">
         <img
           @click="$router.push('/home')"
-          src="../assets/images/logo1.jpg"
+          src="../assets/images/logo.jpg"
           alt="logo"
           style="width: 30px; height: 30px; border-radius: 0 0.7rem 0"
         />

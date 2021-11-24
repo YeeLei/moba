@@ -251,7 +251,7 @@
                   :to="`/article/detail/${picarticle._id}`"
                 >
                   <div class="cover">
-                    <img v-lazy="picarticle.pic" class="cover-img" />
+                    <img v-lazy="picarticle.pic" class="cover-img" style="height: 62px" />
                   </div>
                   <div class="info">
                     <div class="t1">{{ picarticle.title }}</div>
