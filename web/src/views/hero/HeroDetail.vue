@@ -21,7 +21,7 @@
     <div class="basic-info" :style="{ backgroundImage: `url(${heroDetail.banner})` }">
       <div class="info-wrap">
         <div class="info">
-          <div class="alias">{{ heroDetail.alias }}</div>
+          <div class="alias">{{ heroDetail.title }}</div>
           <div class="name">{{ heroDetail.name }}</div>
           <div class="category">
             {{ heroDetail.categories.map((v) => v.name).join('/') }}
@@ -143,7 +143,7 @@
             </div>
             <!-- end of card-equip -->
             <div class="card-store">
-              <m-card title="铭文推荐" icon="icon_store.png" :more="false">
+              <m-card title="符文推荐" icon="icon_store.png" :more="false">
                 <template v-slot:content>
                   <div class="store">
                     <div
@@ -419,7 +419,7 @@ export default {
   }
 
   .basic-info {
-    bg-img(100%, 19rem, '../../assets/images/icon/icon.png', auto, 100%, top, center);
+    bg-img(100%, 19rem, '../../assets/images/icon/icon.png', 100%, 100%, top, center);
 
     .info-wrap {
       position: relative;
@@ -571,7 +571,7 @@ export default {
     }
 
     .card-skill {
-      padding: 1rem 1.2rem;
+      padding: 1rem 0rem;
       background-color: $white;
 
       .show {
@@ -579,6 +579,7 @@ export default {
         margin-bottom: 1.3rem;
 
         .show-item {
+          padding: 0 1.2rem;
           flex: 1;
           text-align: center;
           height: 3.7rem;
@@ -621,13 +622,14 @@ export default {
           }
 
           .icon {
+            border-radius: 50%;
             display: block;
             width: 6rem;
           }
         }
 
         .skill-info {
-          padding-top: 2rem;
+          padding: 2rem 1.2rem 0;
           color: $dark-34;
 
           .name {
@@ -700,8 +702,10 @@ export default {
           }
 
           .icon img {
-            width: 3.3rem;
-            height: 3.9rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            background: #000;
           }
 
           .info {

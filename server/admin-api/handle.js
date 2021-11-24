@@ -234,9 +234,9 @@ module.exports = {
     response(res, 0, '获取装备详情成功', item)
   },
 
-  // -----获取铭文的二级分类-----
+  // -----获取符文的二级分类-----
   async storeCateHandle(req, res) {
-    // 找出铭文下的子分类
+    // 找出符文下的子分类
     const storeCate = await CategoryModel.find({ parent: "617a020ac2b868d520c0e2b5" })
     response(res, 0, '获取铭文二级分类成功', storeCate)
   },

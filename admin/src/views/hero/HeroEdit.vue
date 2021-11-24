@@ -6,8 +6,11 @@
           <el-form-item label="名称">
             <el-input v-model="model.name" placeholder="请输入英雄名称"></el-input>
           </el-form-item>
+          <el-form-item label="别名">
+            <el-input v-model="model.alias" placeholder="请输入英雄别名"></el-input>
+          </el-form-item>
           <el-form-item label="称号">
-            <el-input v-model="model.alias" placeholder="请输入英雄称号"></el-input>
+            <el-input v-model="model.title" placeholder="请输入英雄称号"></el-input>
           </el-form-item>
           <el-form-item label="热门">
             <el-switch v-model="model.hot"></el-switch>
@@ -23,7 +26,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="铭文推荐" class="star-right">
+          <el-form-item label="符文推荐" class="star-right">
             <el-select v-model="model.storeRecommend" filterable multiple placeholder="请选择">
               <el-option
                 v-for="item in storeList"
@@ -119,6 +122,14 @@
               <img v-if="model.showImage" :src="model.showImage" class="banner" />
               <i v-else class="el-icon-plus banner-uploader-icon"></i>
             </el-upload>
+          </el-form-item>
+          <el-form-item label="背景故事">
+            <el-input
+              type="textarea"
+              :rows="3"
+              v-model="model.backStory"
+              placeholder="请输入英雄背景故事"
+            ></el-input>
           </el-form-item>
           <el-form-item label="使用技巧">
             <el-input
@@ -434,6 +445,7 @@ function hero() {
     name: '',
     avatar: '',
     alias: '',
+    title: '',
     hot: false,
     categories: [],
     score: {
@@ -448,6 +460,7 @@ function hero() {
     banner: '',
     showVideo: '',
     showImage: '',
+    backStory: '',
     usageTips: '',
     battleTips: '',
     teamTips: '',

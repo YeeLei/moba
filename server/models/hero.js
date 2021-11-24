@@ -5,6 +5,7 @@ const HeroSchema = mongoose.Schema({
   name: { type: String },
   avatar: { type: String },
   alias: { type: String },
+  title: { type: String },
   // 英雄分类, 可以有多个分类
   categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
   // 上手分数
@@ -44,6 +45,7 @@ const HeroSchema = mongoose.Schema({
   // 铭文推荐
   storeRecommend: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Store' }],
   // 提示
+  backStory: { type: String },
   usageTips: { type: String },
   battleTips: { type: String },
   teamTips: { type: String },
