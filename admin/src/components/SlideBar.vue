@@ -34,9 +34,9 @@
           <el-menu-item index="/goods/equipAdd">新建装备</el-menu-item>
           <el-menu-item index="/goods/equipList">装备列表</el-menu-item>
         </el-menu-item-group>
-        <el-menu-item-group title="铭文">
-          <el-menu-item index="/goods/storeAdd">新建铭文</el-menu-item>
-          <el-menu-item index="/goods/storeList">铭文列表</el-menu-item>
+        <el-menu-item-group title="符文">
+          <el-menu-item index="/goods/storeAdd">新建符文</el-menu-item>
+          <el-menu-item index="/goods/storeList">符文列表</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
 

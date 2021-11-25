@@ -1,5 +1,15 @@
 import request from '@/utils/request'
 
+
+// -----获取装备二级分类-----
+export function fetchEquipTwo(params) {
+  return request({
+    url: '/equip/cate',
+    method: 'get',
+    params
+  })
+}
+
 // 添加装备
 export function saveEquip(data) {
   return request({

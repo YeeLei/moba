@@ -1,14 +1,14 @@
 <template>
   <div id="store-edit">
     <el-card class="box-card">
-      <h1 class="title">{{ id ? '编辑' : '新建' }}铭文</h1>
+      <h1 class="title">{{ id ? '编辑' : '新建' }}符文</h1>
       <el-select v-model="model.category" placeholder="请选择">
         <el-option v-for="item in storeCate" :key="item._id" :label="item.name" :value="item._id">
         </el-option>
       </el-select>
       <el-input
         v-model="model.name"
-        placeholder="请输入铭文名称"
+        placeholder="请输入符文名称"
         @keydown.native.enter="save"
       ></el-input>
       <el-input
@@ -69,7 +69,7 @@ export default {
     this.id && this.getStoreItem()
   },
   methods: {
-    // 保存铭文
+    // 保存符文
     async save() {
       let { name, icon, attr, category } = this.model
       const id = this.id
@@ -78,7 +78,7 @@ export default {
         return
       }
       if (!/^([^;]{1,};){1,3}$/.test(attr)) {
-        this.$message.error('铭文属性不符合规则 (x;x;x;)')
+        this.$message.error('符文属性不符合规则 (x;x;x;)')
         return
       }
       // 将属性字符串分割成字符串数组存储
@@ -92,7 +92,7 @@ export default {
       } else {
         res = await saveStore({ name, icon, attr, category })
       }
-      // 该铭文已存在
+      // 该符文已存在
       if (res.status == 1) {
         this.$message.error(res.msg)
         return
@@ -100,12 +100,12 @@ export default {
       this.$message.success(res.msg)
       this.$router.push('/goods/storeList')
     },
-    // 获取铭文二级分类
+    // 获取符文二级分类
     async fetchStoreTwo() {
       const res = await fetchStoreTwo()
       this.storeCate = res.data
     },
-    // 获取铭文详情
+    // 获取符文详情
     async getStoreItem() {
       const res = await fetchStoreItem({ id: this.id })
       let attrStr = ''

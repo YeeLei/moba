@@ -176,10 +176,17 @@ module.exports = {
     response(res, 0, '获取分类详情成功', item)
   },
 
+  // -----获取装备的二级分类-----
+  async equipCateHandle(req, res) {
+    // 找出装备下的子分类
+    const storeCate = await CategoryModel.find({ parent: "619ee12dd6dc32bea54f7a7e" })
+    response(res, 0, '获取装备二级分类成功', storeCate)
+  },
+
   // ----添加或修改装备----
   async equipEditHandle(req, res) {
     // 获取装备信息
-    const { name, icon, id } = req.body
+    const { name, icon, id, attr, desc, category } = req.body
     const isHave = await EquipModel.findOne({ name })
     // 如果是添加, 有同名的不允许添加
     if (isHave && !id) {
@@ -189,11 +196,11 @@ module.exports = {
     let item, msg
     if (id) {
       // 修改装备
-      item = await EquipModel.findByIdAndUpdate(id, { name, icon })
+      item = await EquipModel.findByIdAndUpdate(id, { name, icon, attr, desc, category })
       msg = '更新装备成功'
     } else {
       // 添加装备
-      item = await EquipModel.create({ name, icon })
+      item = await EquipModel.create({ name, icon, attr, desc, category })
       msg = '新建装备成功'
     }
     response(res, 0, msg, item)
@@ -221,10 +228,27 @@ module.exports = {
     if (name) {
       searchQuery.name = new RegExp(name)  //  {  name: /xxxx/ }
     }
-    // 数据库中装备总数
+    // 获取铭文总数量
     const equipTotal = await EquipModel.find(searchQuery).countDocuments()
-    const equipList = await EquipModel.find(searchQuery).skip(skip).limit(pageSize)
-    response(res, 0, '获取装备列表成功', { equipTotal, equipList })
+    const equipList = await EquipModel.aggregate([
+      {
+        $lookup: {
+          // 关联 categories表, 注意不是模型名category
+          from: 'categories',
+          // 主表关联的字段
+          localField: 'category',
+          // 被关联表要关联的字段
+          foreignField: '_id',
+          // 关联查询出来的放在 categoryInfo属性中
+          as: 'categoryInfo'
+        }
+      },
+      { $match: searchQuery },
+      // 跳过条数
+      { $skip: skip },
+      { $limit: pageSize }
+    ])
+    response(res, 0, '获取装备数据成功', { equipTotal, equipList })
   },
 
   // 装备详情
@@ -330,6 +354,7 @@ module.exports = {
   // 添加或修改英雄
   async heroEditHandle(req, res) {
     const { id, heroItem } = req.body
+    console.log(heroItem);
     const isHave = await HeroModel.findOne({ name: heroItem.name })
     if (isHave && !id) {
       response(res, 1, '该英雄已存在')

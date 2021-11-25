@@ -80,7 +80,7 @@
               <el-option
                 v-for="item in equipList"
                 :key="item._id"
-                :label="item.name"
+                :label="item.categoryInfo[0].name + ' -- ' + item.name"
                 :value="item._id"
               >
               </el-option>
@@ -91,7 +91,7 @@
               <el-option
                 v-for="item in equipList"
                 :key="item._id"
-                :label="item.name"
+                :label="item.categoryInfo[0].name + ' -- ' + item.name"
                 :value="item._id"
               >
               </el-option>

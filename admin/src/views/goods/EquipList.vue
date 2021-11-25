@@ -1,5 +1,5 @@
 <template>
-  <div id="equip-list">
+  <div id="store-list">
     <el-card class="box-card data-list-card">
       <div class="left">
         <i class="el-icon-document"></i>
@@ -16,12 +16,14 @@
     </div>
     <el-table :data="equipList" border style="width: 100%">
       <el-table-column prop="number" label="编号" width="150"> </el-table-column>
-      <el-table-column prop="name" label="装备名称" width="500"> </el-table-column>
-      <el-table-column label="图标" width="300">
+      <el-table-column prop="name" label="装备名称" width="150"> </el-table-column>
+      <el-table-column label="图标" width="100">
         <template slot-scope="scope">
           <el-avatar shape="square" :size="40" :src="scope.row.icon"></el-avatar>
         </template>
       </el-table-column>
+      <el-table-column prop="categoryName" label="所属分类" width="150"> </el-table-column>
+      <el-table-column prop="attr" label="属性描述" width="520"> </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="mini" @click="$router.push(`/goods/equipUpdate/${scope.row._id}`)"
@@ -51,8 +53,8 @@ export default {
   name: 'EquipList',
   data() {
     return {
-      equipList: [],
-      equipTotal: 20, // 装备总数量
+      equipList: [], // 当前页符文数据
+      equipTotal: 20, // 符文总数量
       pageSize: 5, // 每页显示的个数
       page: 1, // 当前页数
       name: '',
@@ -69,13 +71,13 @@ export default {
     this.fetchEquip()
   },
   methods: {
-    // 获取装备数据
+    // 获取符文数据
     async fetchEquip() {
       const { page, pageSize, name } = this
       const res = await getEquip({ page, pageSize, name })
-      this.handleEquip(res.data)
+      this.handleStore(res.data)
     },
-    // 删除装备
+    // 删除符文
     async deleteEquip(row) {
       this.$confirm(`确认要删除装备"${row.name}"?`, '提示', {
         confirmButtonText: '确定',
@@ -92,19 +94,35 @@ export default {
         this.fetchEquip()
       })
     },
-    // 页数改变
+    // 页数改变时
     pageChange(currentPage) {
       this.page = currentPage
       this.fetchEquip()
     },
     // 对返回的数据处理
-    handleEquip(data) {
+    handleStore(data) {
       data.equipList.forEach((item, index) => {
+        // 设置编号
         if (this.page == 1) {
           item.number = index + 1
         } else {
           item.number = (this.page - 1) * this.pageSize + (index + 1)
         }
+        // 遍历分类信息添加一个categoryName字段
+        item.categoryInfo.forEach((cate) => {
+          item.categoryName = cate.name
+        })
+        // 拼接属性字符串, 原数据是字符串数组
+        let attrStr = ''
+        item.attr.forEach((attr, index) => {
+          // 如果是最后一项
+          if (index == item.attr.length - 1) {
+            attrStr += attr
+          } else {
+            attrStr += attr + ' / '
+          }
+        })
+        item.attr = attrStr
       })
       this.equipTotal = data.equipTotal
       this.equipList = data.equipList
@@ -114,7 +132,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-#equip-list {
+#store-list {
   .search {
     overflow: hidden;
     margin: 50px 0 15px 0;

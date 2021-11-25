@@ -10,13 +10,13 @@
       </div>
     </el-card>
     <div class="search">
-      <el-input placeholder="搜索铭文" v-model="name">
+      <el-input placeholder="搜索符文" v-model="name">
         <el-button slot="append" icon="el-icon-search"></el-button>
       </el-input>
     </div>
     <el-table :data="storeList" border style="width: 100%">
       <el-table-column prop="number" label="编号" width="150"> </el-table-column>
-      <el-table-column prop="name" label="铭文名称" width="150"> </el-table-column>
+      <el-table-column prop="name" label="符文名称" width="150"> </el-table-column>
       <el-table-column label="图标" width="100">
         <template slot-scope="scope">
           <el-avatar shape="square" :size="40" :src="scope.row.icon"></el-avatar>
@@ -53,8 +53,8 @@ export default {
   name: 'StoreList',
   data() {
     return {
-      storeList: [], // 当前页铭文数据
-      storeTotal: 20, // 铭文总数量
+      storeList: [], // 当前页符文数据
+      storeTotal: 20, // 符文总数量
       pageSize: 5, // 每页显示的个数
       page: 1, // 当前页数
       name: '',
@@ -71,15 +71,15 @@ export default {
     this.fetchStore()
   },
   methods: {
-    // 获取铭文数据
+    // 获取符文数据
     async fetchStore() {
       const { page, pageSize, name } = this
       const res = await getStore({ page, pageSize, name })
       this.handleStore(res.data)
     },
-    // 删除铭文
+    // 删除符文
     async deleteStore(row) {
-      this.$confirm(`确认要删除铭文"${row.name}"?`, '提示', {
+      this.$confirm(`确认要删除符文"${row.name}"?`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',

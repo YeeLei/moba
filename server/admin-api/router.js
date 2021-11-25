@@ -34,6 +34,7 @@ router.delete('/equip/delete', handle.auth, handle.equipDeleteHandle)
 router.put('/equip/update', handle.auth, handle.equipEditHandle)
 router.get('/equip/list', handle.auth, handle.equipListHandle)
 router.get('/equip/item', handle.auth, handle.equipItemHandle)
+router.get('/equip/cate', handle.auth, handle.equipCateHandle)
 
 // 铭文
 router.post('/store/add', handle.auth, handle.storeEditHandle)
