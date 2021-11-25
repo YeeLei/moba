@@ -88,13 +88,13 @@ export default {
     calcNewsClass(categoryName) {
       let className = ''
       switch (categoryName) {
-        case '新闻':
+        case '公告':
           className = 'news-cate-one'
           break
-        case '公告':
+        case '攻略':
           className = 'news-cate-two'
           break
-        case '活动':
+        case '社区':
           className = 'news-cate-three'
           break
         case '赛事':

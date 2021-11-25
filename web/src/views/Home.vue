@@ -6,7 +6,7 @@
           <a :href="item.url">
             <img
               :src="item.image"
-              style="display: block; width: 100%; height: 160px"
+              style="display: block; width: 100%; height: 17rem"
               alt="ads-img"
             />
           </a>
@@ -40,13 +40,13 @@
           </a>
         </div>
         <div class="icon-item">
-          <a href="https://pvp.qq.com/cp/a20161116tyf/page01.htm" class="icon-link">
+          <a href="#" class="icon-link">
             <i class="sprite sprite-four"></i>
             <div class="text">体验服</div>
           </a>
         </div>
         <div class="icon-item">
-          <a href="https://pvp.qq.com/m/m201606/goCenter.shtml" class="icon-link">
+          <a href="#" class="icon-link">
             <i class="sprite sprite-five"></i>
             <div class="text">新人专区</div>
           </a>
@@ -76,13 +76,13 @@
           </a>
         </div>
         <div class="icon-item">
-          <a href=" https://pvp.qq.com/cp/a20190320bbgxsmm/index.html" class="icon-link">
+          <a href="#" class="icon-link">
             <i class="sprite bg-one"></i>
             <div class="text">版本介绍</div>
           </a>
         </div>
         <div class="icon-item">
-          <a href="https://pvp.qq.com/cp/a20190917station/index.html" class="icon-link">
+          <a href="#" class="icon-link">
             <i class="sprite bg-two"></i>
             <div class="text">对局环境</div>
           </a>
@@ -164,7 +164,7 @@
             :key="index"
           >
             <div class="cover">
-              <img v-lazy="item.cover" class="cover-img" alt="cover" />
+              <img :src="item.cover" class="cover-img" alt="cover" />
             </div>
             <div class="title">{{ item.title }}</div>
             <div class="info">
@@ -187,6 +187,7 @@
       </template>
     </m-card-list>
     <!-- end of videoCard -->
+
     <router-link tag="div" to="/strategy" class="video-more">加载更多内容</router-link>
   </div>
 </template>
@@ -274,13 +275,13 @@ export default {
     calcNewsClass(categoryName) {
       let className = ''
       switch (categoryName) {
-        case '新闻':
+        case '公告':
           className = 'news-cate-one'
           break
-        case '公告':
+        case '攻略':
           className = 'news-cate-two'
           break
-        case '活动':
+        case '社区':
           className = 'news-cate-three'
           break
         case '赛事':
@@ -483,6 +484,7 @@ export default {
     .news-hero {
       display: block;
       width: 100%;
+      height: 13rem;
     }
   }
 
@@ -536,7 +538,7 @@ export default {
         height: 10.2rem;
 
         .cover-img {
-          border-radius: 0.75rem;
+          border-radius: 0.3rem;
           pos-base();
           width: 100%;
           height: 10.2rem;

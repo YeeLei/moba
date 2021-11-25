@@ -114,28 +114,20 @@ export default {
       data.forEach((item, index) => {
         switch (index) {
           case 0:
-            item.title = '王者荣耀2021KPL春季赛'
+            item.title = '英雄联盟2021全球总决赛'
             item.banner = 'match_01.jpeg'
             break
           case 1:
-            item.title = '2021王者荣耀世界冠军杯'
+            item.title = '英雄联盟2021职业联赛'
             item.banner = 'match_02.jpeg'
             break
           case 2:
-            item.title = '王者荣耀城市赛'
+            item.title = '英雄联盟2021全明星赛'
             item.banner = 'match_03.jpeg'
             break
           case 3:
-            item.title = '王者荣耀高校赛'
+            item.title = '英雄联盟2021德玛西亚杯'
             item.banner = 'match_04.jpeg'
-            break
-          case 4:
-            item.title = 'TGA'
-            item.banner = 'match_05.jpeg'
-            break
-          case 5:
-            item.title = 'WGI'
-            item.banner = 'match_06.jpeg'
             break
         }
       })
@@ -239,6 +231,7 @@ export default {
 
       .banner {
         pos-base(absolute, 0, 0, 100%, auto);
+        height: 21rem;
       }
     }
 

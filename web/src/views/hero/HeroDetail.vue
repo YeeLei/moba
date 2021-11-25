@@ -167,6 +167,13 @@
             </div>
             <!-- end of card-store -->
             <div class="card-usage">
+              <m-card title="背景故事" icon="icon_team.png" :more="false">
+                <template v-slot:content>
+                  <p class="txt">{{ heroDetail.backStory }}</p>
+                </template>
+              </m-card>
+            </div>
+            <div class="card-usage">
               <m-card title="使用技巧" icon="icon_use.png" :more="false">
                 <template v-slot:content>
                   <p class="txt">{{ heroDetail.usageTips }}</p>
@@ -576,7 +583,7 @@ export default {
 
       .show {
         flex-align(flex-start);
-        margin-bottom: 1.3rem;
+        padding: 0 1.2rem;
 
         .show-item {
           padding: 0 1.2rem;
@@ -611,6 +618,7 @@ export default {
 
         .skill-icon {
           flex-align();
+          padding: 0 1rem;
         }
 
         .skill-item {
@@ -624,7 +632,7 @@ export default {
           .icon {
             border-radius: 50%;
             display: block;
-            width: 6rem;
+            width: 5.5rem;
           }
         }
 
@@ -664,13 +672,19 @@ export default {
         }
 
         .equip-wrap {
-          flex-align();
+          display: flex;
+          justify-content: space-between;
+          flex-wrap: nowrap;
           margin: 0 0.5rem;
           text-align: center;
 
           &.border {
             border-bottom($grey-ba);
             margin-bottom: 1.3rem;
+          }
+
+          .equip-item {
+            flex: 1;
           }
 
           .icon {
@@ -680,6 +694,7 @@ export default {
           .name {
             font-size: $font-xxs;
             margin: 0.5rem 0 0.2rem 0;
+            color: #000;
           }
         }
       }
@@ -702,8 +717,8 @@ export default {
           }
 
           .icon img {
-            width: 3.5rem;
-            height: 3.5rem;
+            width: 4rem;
+            height: 4rem;
             border-radius: 50%;
             background: #000;
           }
