@@ -733,9 +733,10 @@ export default {
 
       .video-1-item {
         flex: 1;
+        margin-right: 0.7rem;
 
         &:first-child {
-          margin-right: 0.7rem;
+          margin-right: 0;
         }
 
         .cover {

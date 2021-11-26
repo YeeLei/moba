@@ -3,7 +3,12 @@
     <video :src="videoDetail.video" autoplay controls width="100%"></video>
     <div class="video-info">
       <div class="avatar">
-        <img src="../assets/images/default_head.jpg" width="100%" alt="avatar" />
+        <img
+          src="../assets/images/default_head.jpg"
+          width="100%"
+          style="height: 6.5rem; border-radius: 0.5rem"
+          alt="avatar"
+        />
       </div>
       <div class="title">{{ videoDetail.title }}</div>
       <div class="other">
@@ -64,7 +69,7 @@ export default {
     }
 
     .avatar {
-      pos-base(absolute, 0, 1rem, 5.7rem, auto);
+      pos-base(absolute, 1rem, 1.1rem, 5.7rem, auto);
     }
   }
 

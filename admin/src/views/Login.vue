@@ -21,7 +21,7 @@
       </div>
       <div class="manage_tip">
         <div class="title">
-          <img src="../assets/images/logo.png" class="img" />
+          <img src="../assets/images/logo.png" width="200" height="60" class="img" />
         </div>
         <el-form
           :model="ruleForm"

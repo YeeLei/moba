@@ -108,7 +108,7 @@ export default {
       const { title, play, category, author, cover, video, date } = this.model
       const id = this.id
       // 名字不能为空
-      if (!title || !play || !category || !cover || !video || !date) {
+      if (!title || !play || !category || !date) {
         this.$message.error('请将信息填写完整')
         return
       }

@@ -19,22 +19,19 @@
     <div class="icon-wrap">
       <div class="icon" :class="{ down: !foldIcon }">
         <div class="icon-item">
-          <a href="https://pvp.qq.com/m/m201706/coming/index.htm" class="icon-link">
+          <a href="#" class="icon-link">
             <i class="sprite sprite-one"></i>
             <div class="text">爆料站</div>
           </a>
         </div>
         <div class="icon-item">
-          <a
-            href="https://pvp.qq.com/act/a20160510story/index.htm?ADTAG=PC.QrCode.TG"
-            class="icon-link"
-          >
+          <a href="https://yz.lol.qq.com/zh_CN/" class="icon-link">
             <i class="sprite sprite-two"></i>
             <div class="text">故事站</div>
           </a>
         </div>
         <div class="icon-item">
-          <a href="https://pvp.qq.com/mall/m" class="icon-link">
+          <a href="#" class="icon-link">
             <i class="sprite sprite-three"></i>
             <div class="text">周边商城</div>
           </a>
@@ -52,23 +49,23 @@
           </a>
         </div>
         <div class="icon-item">
-          <a href="https://pvp.qq.com/m/memory/index.shtml" class="icon-link">
+          <a href="#" class="icon-link">
             <i class="sprite sprite-six"></i>
             <div class="text">荣耀-传承</div>
           </a>
         </div>
         <div class="icon-item">
           <a
-            href="https://image.ttwz.qq.com/wzry/wzryzs_download_4001.htm?ADTAG=mpvp.qq.com"
+            href="https://a.app.qq.com/o/simple.jsp?pkgname=com.tencent.qt.qtl&from=singlemessage"
             class="icon-link"
           >
             <i class="sprite sprite-seven"></i>
-            <div class="text">王者营地</div>
+            <div class="text">掌上联盟</div>
           </a>
         </div>
         <div class="icon-item">
           <a
-            href="https://game.weixin.qq.com/cgi-bin/comm/openlink?noticeid=90102708&appid=wx95a3a4d7c627e07d&url=https%3A%2F%2Fgame.weixin.qq.com%2Fcgi-bin%2Fh5%2Fstatic%2Fsubscribe%2Findex.html%3Fappid%3Dwx95a3a4d7c627e07d#wechat_redirect"
+            href="https://game.weixin.qq.com/cgi-bin/h5/static/circlecenter/mixed_circle.html?ssid=1&appid=wx35a4657522d31151&befrom=share&wechat_pkgid=circlecenter_mixed_circle&share_openid=g1Nlbym-JXKFgZSMOZYEd4udhk3E&from_id=3"
             class="icon-link"
           >
             <i class="sprite sprite-eight"></i>
@@ -88,13 +85,13 @@
           </a>
         </div>
         <div class="icon-item">
-          <a href="https://pvp.qq.com/cp/a20210428ipgc" class="icon-link">
+          <a href="#" class="icon-link">
             <i class="sprite bg-three"></i>
             <div class="text">无限王者团</div>
           </a>
         </div>
         <div class="icon-item">
-          <a href="https://pvp.qq.com/m/hdy/p1/index.html" class="icon-link">
+          <a href="#" class="icon-link">
             <i class="sprite bg-four"></i>
             <div class="text">创意互动营</div>
           </a>
@@ -166,7 +163,6 @@
             <div class="cover">
               <img :src="item.cover" class="cover-img" alt="cover" />
             </div>
-            <div class="title">{{ item.title }}</div>
             <div class="info">
               <i class="play-icon"></i>
               <span
@@ -180,7 +176,12 @@
                     : item.play
                 "
               ></span>
-              <span class="date">{{ item.date | formatDate('MM-DD') }}</span>
+              <span class="date">{{ item.date | formatDate('YYYY-MM-DD') }}</span>
+            </div>
+            <div class="title">{{ item.title }}</div>
+            <div class="subtitle">{{ item.title }}</div>
+            <div class="news-line">
+              <div class="decorate-line"></div>
             </div>
           </div>
         </div>
@@ -278,7 +279,7 @@ export default {
         case '公告':
           className = 'news-cate-one'
           break
-        case '攻略':
+        case '活动':
           className = 'news-cate-two'
           break
         case '社区':
@@ -526,7 +527,7 @@ export default {
     margin: 0 -0.4rem;
 
     .video-item {
-      width: 50%;
+      width: 100%;
       padding: 0.5rem;
       padding-bottom: 0;
       margin-bottom: 1.3rem;
@@ -535,13 +536,16 @@ export default {
       .cover {
         position: relative;
         width: 100%;
-        height: 10.2rem;
+        height: 18.5rem;
+        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 3.5rem), calc(100% - 4rem) 100%, 0 100%);
 
         .cover-img {
-          border-radius: 0.3rem;
+          display: block;
           pos-base();
           width: 100%;
-          height: 10.2rem;
+          height: 100%;
+          object-fit: cover;
+          transition: all 0.3s;
         }
       }
 
@@ -551,13 +555,23 @@ export default {
         color: $dark-22;
         height: 4.3rem;
         line-height: 1.7em;
-        font-size: $font-sm;
+        font-size: $font-md;
+        text-ellipsis(2);
+        font-weight: bold;
+      }
+
+      .subtitle {
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+        color: $dark-34;
+        font-size: $font-s;
         text-ellipsis(2);
       }
 
       .info {
-        font-size: $font-xxs;
-        color: $grey-7a;
+        margin-top: 0.5rem;
+        font-size: $font-xs;
+        color: $dark-22;
 
         .play-icon {
           sprite-icon(1.2rem, 0.9rem, -11.7rem, -23.4rem);
@@ -566,6 +580,34 @@ export default {
 
         .date {
           float: right;
+        }
+      }
+    }
+
+    .news-line {
+      position: relative;
+      width: 100%;
+      height: 0.3rem;
+      margin-top: 2rem;
+      background: #dbdbdb;
+
+      .decorate-line {
+        left: 0;
+        top: 0.1rem;
+        position: absolute;
+        width: 6.5rem;
+        height: 0.4rem;
+        background-color: #dbdbdb;
+
+        &:after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 100%;
+          width: 0.4rem;
+          height: 0.4rem;
+          border-right: 0.4rem solid transparent;
+          border-top: 0.4rem solid #dbdbdb;
         }
       }
     }

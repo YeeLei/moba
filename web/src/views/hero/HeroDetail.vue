@@ -95,7 +95,14 @@
                 </div>
                 <div class="skill-info">
                   <div class="basic">
-                    <span class="name">{{ heroDetail.skills[skillActive].name }}</span>
+                    <span class="name" v-if="skillActive === 0"
+                      >{{ heroDetail.skills[skillActive].name }}:
+                      <i class="name-b">被动技能</i></span
+                    >
+                    <span class="name" v-else
+                      >{{ heroDetail.skills[skillActive].name }}:
+                      <i class="name-b">主动技能</i></span
+                    >
                     <span class="consume">
                       (冷却值:
                       {{ heroDetail.skills[skillActive].cooling }} 消耗:
@@ -206,7 +213,12 @@
                         v-for="(item, index) in heroDetail.partners"
                         :key="index"
                       >
-                        <img :src="item.hero.avatar" class="avatar" alt="hero-avatar" />
+                        <img
+                          :src="item.hero.avatar"
+                          class="avatar"
+                          alt="hero-avatar"
+                          @click="heroClick(item.hero._id)"
+                        />
                         <div class="description">{{ item.description }}</div>
                       </div>
                     </div>
@@ -219,7 +231,12 @@
                         v-for="(item, index) in heroDetail.enemies"
                         :key="index"
                       >
-                        <img :src="item.hero.avatar" class="avatar" alt="hero-avatar" />
+                        <img
+                          :src="item.hero.avatar"
+                          class="avatar"
+                          alt="hero-avatar"
+                          @click="heroClick(item.hero._id)"
+                        />
                         <div class="description">{{ item.description }}</div>
                       </div>
                     </div>
@@ -232,7 +249,12 @@
                         v-for="(item, index) in heroDetail.preies"
                         :key="index"
                       >
-                        <img :src="item.hero.avatar" class="avatar" alt="hero-avatar" />
+                        <img
+                          :src="item.hero.avatar"
+                          class="avatar"
+                          alt="hero-avatar"
+                          @click="heroClick(item.hero._id)"
+                        />
                         <div class="description">{{ item.description }}</div>
                       </div>
                     </div>
@@ -354,6 +376,15 @@ export default {
       skillActive: 0, //当前选中的技能项
     }
   },
+  watch: {
+    $route() {
+      if (this.id) {
+        this.fetchHero()
+      } else {
+        this.heroDetail = hero()
+      }
+    },
+  },
   mounted() {
     this.fetchHero()
   },
@@ -385,6 +416,10 @@ export default {
       // 保存视频数据到本地
       localStorage.setItem('video', JSON.stringify(item))
       this.$router.push('/videoPlay')
+    },
+    heroClick(id) {
+      // 跳转到相应的英雄详情页面
+      this.$router.push('/hero/detail/' + id)
     },
   },
   components: {
@@ -622,10 +657,26 @@ export default {
         }
 
         .skill-item {
+          position: relative;
+          opacity: 0.85;
           margin: 0 0.5rem;
           border: 0.25rem solid transparent;
+          transition: opacity 0.2s, transform 0.3s;
+
+          &:first-of-type::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -1rem;
+            width: 0.2rem;
+            height: 5.5rem;
+            background-color: rgba(0, 0, 0, 0.4);
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+          }
 
           &.skill-active {
+            opacity: 1;
             border-color: $orange-d5;
           }
 
@@ -641,9 +692,14 @@ export default {
           color: $dark-34;
 
           .name {
-            font-size: $font-m;
+            font-size: $font-md;
             font-weight: 700;
             margin-right: 1.5rem;
+
+            .name-b {
+              font-size: $font-md;
+              color: $grey-7a;
+            }
           }
 
           .consume {
@@ -740,6 +796,7 @@ export default {
 
     .card-usage, .card-battle, .card-team {
       .txt {
+        text-indent: 1rem;
         margin: 0;
         padding-bottom: 1rem;
         font-size: $font-sm;
@@ -773,11 +830,13 @@ export default {
           padding-bottom: 1.5rem;
 
           .avatar {
+            border-radius: 50%;
             width: 4.8rem;
             margin-right: 1rem;
           }
 
           .description {
+            text-indent: 1rem;
             font-size: $font-sm;
             line-height: 2rem;
           }
