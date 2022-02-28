@@ -734,9 +734,11 @@ export default {
       .video-1-item {
         flex: 1;
         margin-right: 0.7rem;
+        margin-left: 0.7rem;
 
         &:first-child {
           margin-right: 0;
+          margin-left: 0;
         }
 
         .cover {
@@ -812,7 +814,7 @@ export default {
 
           .t1 {
             color: $dark-34;
-            font-size: $font-m;
+            font-size: $font-md;
             height: 20px;
             line-height: 20px;
             overflow: hidden;

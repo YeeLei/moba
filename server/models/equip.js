@@ -1,4 +1,4 @@
-// goods 集合(表) 定义文件
+// 装备 集合(表) 定义文件
 const mongoose = require('./db')
 
 const EquipSchema = mongoose.Schema({
@@ -8,7 +8,7 @@ const EquipSchema = mongoose.Schema({
   attr: { type: Array },
   //装备描述
   desc: { type: String },
-  // 所属铭文分类, 关联Category模型, 分类是唯一的
+  // 所属分类, 关联Category模型, 分类是唯一的
   category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' }
 })
 

@@ -87,7 +87,7 @@
         <div class="icon-item">
           <a href="#" class="icon-link">
             <i class="sprite bg-three"></i>
-            <div class="text">无限王者团</div>
+            <div class="text">无限火力</div>
           </a>
         </div>
         <div class="icon-item">
@@ -161,7 +161,24 @@
             :key="index"
           >
             <div class="cover">
-              <img :src="item.cover" class="cover-img" alt="cover" />
+              <img v-lazy="item.cover" class="cover-img" alt="cover" />
+              <svg viewBox="0 0 40 40" class="news-icon">
+                <path
+                  d="M24.6 20l-7.1-4.8v9.5l7.1-4.7z"
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  fill="#fff"
+                ></path>
+                <circle
+                  cx="20"
+                  cy="20"
+                  r="15.8"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="2"
+                  stroke-miterlimit="10"
+                ></circle>
+              </svg>
             </div>
             <div class="info">
               <i class="play-icon"></i>
@@ -537,7 +554,7 @@ export default {
         position: relative;
         width: 100%;
         height: 18.5rem;
-        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 3.5rem), calc(100% - 4rem) 100%, 0 100%);
+        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2rem), calc(100% - 2rem) 100%, 0 100%);
 
         .cover-img {
           display: block;
@@ -546,6 +563,19 @@ export default {
           height: 100%;
           object-fit: cover;
           transition: all 0.3s;
+
+          &:after {
+            opacity: 0.4;
+          }
+        }
+
+        .news-icon {
+          position: absolute;
+          top: 0.8rem;
+          left: 0.8rem;
+          z-index: 3;
+          width: 2.7rem;
+          height: 2.7rem;
         }
       }
 

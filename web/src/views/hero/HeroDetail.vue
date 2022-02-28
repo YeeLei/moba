@@ -765,8 +765,22 @@ export default {
         padding-bottom: 1.4rem;
 
         .store-item {
+          position: relative;
           flex-align();
-          margin-right: 0.2rem;
+          margin-right: 1.5rem;
+
+          &:first-child {
+            &:after {
+              content: '';
+              position: absolute;
+              top: 50%;
+              right: -1rem;
+              width: 0.1rem;
+              height: 100%;
+              background-color: rgba(0, 0, 0, 0.4);
+              transform: translateY(-50%);
+            }
+          }
 
           &:last-child {
             margin-right: 0;

@@ -362,11 +362,11 @@ module.exports = {
     }
     let item, msg
     if (id) {
-      // 修改铭文
+      // 修改英雄
       item = await HeroModel.findByIdAndUpdate(id, heroItem)
       msg = '更新英雄成功'
     } else {
-      // 添加铭文
+      // 添加英雄
       item = await HeroModel.create(heroItem)
       msg = '新建英雄成功'
     }
@@ -585,25 +585,6 @@ module.exports = {
     const articleTotal = await ArticleModel.find(searchQuery).countDocuments()
     const articleList = await ArticleModel.find(searchQuery)
       .populate('categories').setOptions(searchQuery).skip(skip).limit(pageSize).sort({ date: -1 })
-
-    // const articleList = await ArticleModel.aggregate([
-    //   {
-    //     $lookup: {
-    //       // 关联 categories表, 注意不是模型名category
-    //       from: 'categories',
-    //       // 主表关联的字段
-    //       localField: 'categories',
-    //       // 被关联表要关联的字段
-    //       foreignField: '_id',
-    //       // 关联查询出来的放在 categoryInfo属性中
-    //       as: 'categoryInfo'
-    //     }
-    //   },
-    //   { $match: searchQuery },
-    //   // 跳过条数
-    //   { $skip: skip },
-    //   { $limit: pageSize }
-    // ])
     response(res, 0, '获取文章列表成功', { articleTotal, articleList })
   },
 

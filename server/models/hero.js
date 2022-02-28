@@ -1,4 +1,4 @@
-// goods 集合(表) 定义文件
+// 英雄 集合(表) 定义文件
 const mongoose = require('./db')
 
 const HeroSchema = mongoose.Schema({

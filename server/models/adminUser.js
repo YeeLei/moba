@@ -1,9 +1,9 @@
-// goods 集合(表) 定义文件
+// adminUser 集合(表) 定义文件
 const mongoose = require('./db')
 
 const UserSchema = mongoose.Schema({
-  email: { type: String, required: true },
-  password: {
+  email: { type: String, required: true }, // 系统管理员邮箱
+  password: { // 密码
     type: String,
     // 查询数据时默认不把password字段带出来
     select: false, // 不显示密码
@@ -12,16 +12,16 @@ const UserSchema = mongoose.Schema({
       return require('bcryptjs').hashSync(val, 10)
     }
   },
-  name: {
+  name: { // 姓名
     type: String,
     required: true
   },
-  avatar: {
+  avatar: { //头像
     type: String
   }
 },
   {
-    timestamps: true
+    timestamps: true // 生成时间戳
   }
 )
 

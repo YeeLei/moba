@@ -8,7 +8,7 @@ module.exports = {
   chainWebpack: config => {
     // 改变 htmlWebpackPlugin.options.title 变量的值为 wang-moba-web
     config.plugin('html').tap(options => {
-      options[0].title = 'wang-moba-web'
+      options[0].title = 'moba-web'
       return options
     })
   },

@@ -1,4 +1,4 @@
-// goods 集合(表) 定义文件
+// ad 集合(表) 定义文件
 const mongoose = require('./db')
 
 const AdSchema = mongoose.Schema({

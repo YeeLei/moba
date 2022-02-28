@@ -12,6 +12,7 @@
       <div class="data-name">作者: {{ articleDetail.author }}</div>
       <div class="data-view">{{ articleDetail.hits }}次阅读</div>
     </div>
+    <div class="detail-line"><div class="line-inner"></div></div>
     <div class="body">
       <div class="content" v-html="articleDetail.body"></div>
     </div>
@@ -106,7 +107,6 @@ export default {
 
   .detail-data {
     flex-align(flex-start);
-    margin-bottom: 1rem;
     padding: 0 3rem;
     height: 30px;
     line-height: 30px;
@@ -115,6 +115,53 @@ export default {
 
     .data-name {
       flex: 1;
+    }
+  }
+
+  .detail-line {
+    position: relative;
+    margin: 0 auto 2rem;
+    width: 90%;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0.4rem;
+      left: 0;
+      width: 100%;
+      height: 0.2rem;
+      background-color: #ffd071;
+    }
+
+    .line-inner {
+      position: absolute;
+      width: 10rem;
+      height: 0.4rem;
+      background-color: #ffd071;
+      position: absolute;
+      top: 0.2rem;
+      left: 0;
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 100%;
+        width: 0.2rem;
+        height: 0.2rem;
+        border-right: 4px solid transparent;
+        border-bottom: 4px solid #ffd071;
+      }
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0.7rem;
+      left: 0;
+      width: 90%;
+      height: 0.2rem;
+      background-color: #ffd071;
     }
   }
 

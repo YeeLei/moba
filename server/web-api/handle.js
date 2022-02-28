@@ -8,7 +8,6 @@ const VideoModel = require('../models/video')
 const PicarticleModel = require('../models/picarticle')
 const response = require('../utils/response')
 const random = require('../utils/random')
-const awaitWrap = require('../utils/error')
 
 // 对应路由的处理函数
 module.exports = {
@@ -337,9 +336,7 @@ module.exports = {
       // 截取数组 0 - skip(不包括)
       item.picarticleList = item.picarticleList.slice(0, skip)
     })
-
     response(res, 0, '获取攻略中心图文资讯文章成功', catesData)
-
   },
 
   // 赛事中心二级分类
@@ -386,9 +383,7 @@ module.exports = {
       // 截取数组 0 - skip(不包括)
       item.matchList = item.matchList.slice(0, skip)
     })
-
     response(res, 0, '获取赛事中心文章成功', catesData)
-
   },
 
   // 最新英雄广告图

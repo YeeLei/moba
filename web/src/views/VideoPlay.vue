@@ -1,6 +1,6 @@
 <template>
   <div id="video-play">
-    <video :src="videoDetail.video" autoplay controls width="100%"></video>
+    <video :src="videoDetail.video" autoplay muted controls width="100%"></video>
     <div class="video-info">
       <div class="avatar">
         <img
