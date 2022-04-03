@@ -1,3 +1,3 @@
-# wang-moba-server
+# moba-server
 
-wang-moba-server是wang-moba项目的api接口
+moba-server是moba项目的api接口

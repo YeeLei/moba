@@ -9,17 +9,19 @@ const ArticleModel = require('../models/article')
 const PicarticleModel = require('../models/picarticle')
 const VideoModel = require('../models/video')
 
+// jwt第三方插件
 const jwt = require('jsonwebtoken')
+// bcrypt加密插件
 const bcrypt = require('bcryptjs')
 
+// 自定义工具模块
 const response = require('../utils/response')
 const awaitWrap = require('../utils/error')
 
-// 用于 生成token 和 解密token 的字符串
+// 用于生成token 和 解密token的字符串
 const SECRET = 'hdfgsdfgsdf2121sfdas'
 
 module.exports = {
-
   // 验证token的中间件函数
   async auth(req, res, next) {
     // // 获取请求头中的token
@@ -38,7 +40,6 @@ module.exports = {
 
   // 登录路由处理
   async loginHandle(req, res) {
-
     const { email, password } = req.body
 
     // 1. 根据邮箱查找用户
@@ -58,9 +59,13 @@ module.exports = {
     }
 
     // 3.登陆成功, 返回token
-    const token = jwt.sign({
-      id: String(user._id)
-    }, SECRET, { expiresIn: '72h' })
+    const token = jwt.sign(
+      {
+        id: String(user._id),
+      },
+      SECRET,
+      { expiresIn: '72h' }
+    )
     // 返回token
     response(res, 0, '登录成功', { user }, token)
   },
@@ -94,7 +99,7 @@ module.exports = {
     if (!parent) {
       // 判断该一级分类是否已存在同名的
       let totalItem = await CategoryModel.find()
-      totalItem.forEach(item => {
+      totalItem.forEach((item) => {
         if (item.name === name && !item.parent) {
           isHave = true
         }
@@ -140,10 +145,7 @@ module.exports = {
     } else {
       // 删除的是一级分类, 需要把其下的所有二级分类也删除
       await CategoryModel.deleteMany({
-        $or: [
-          { _id: id },
-          { parent: id }
-        ]
+        $or: [{ _id: id }, { parent: id }],
       })
     }
     response(res, 0, '删除分类成功')
@@ -154,7 +156,7 @@ module.exports = {
     // 查询出所有分类
     let totalItem = await CategoryModel.find()
     // 过滤出一级分类
-    let levelOne = totalItem.filter(item => !item.parent)
+    let levelOne = totalItem.filter((item) => !item.parent)
     response(res, 0, '获取一级分类成功', levelOne)
   },
 
@@ -164,7 +166,9 @@ module.exports = {
     const id = req.query.id
     // 查询出所有分类
     let totalItem = await CategoryModel.find()
-    levelTwo = totalItem.filter(item => item.parent && String(item.parent) === id)
+    levelTwo = totalItem.filter(
+      (item) => item.parent && String(item.parent) === id
+    )
     response(res, 0, '获取二级分类成功', levelTwo)
   },
 
@@ -179,7 +183,9 @@ module.exports = {
   // -----获取装备的二级分类-----
   async equipCateHandle(req, res) {
     // 找出装备下的子分类
-    const storeCate = await CategoryModel.find({ parent: "619ee12dd6dc32bea54f7a7e" })
+    const storeCate = await CategoryModel.find({
+      parent: '619ee12dd6dc32bea54f7a7e',
+    })
     response(res, 0, '获取装备二级分类成功', storeCate)
   },
 
@@ -196,7 +202,13 @@ module.exports = {
     let item, msg
     if (id) {
       // 修改装备
-      item = await EquipModel.findByIdAndUpdate(id, { name, icon, attr, desc, category })
+      item = await EquipModel.findByIdAndUpdate(id, {
+        name,
+        icon,
+        attr,
+        desc,
+        category,
+      })
       msg = '更新装备成功'
     } else {
       // 添加装备
@@ -226,7 +238,7 @@ module.exports = {
     let name = req.query.name
     let searchQuery = {}
     if (name) {
-      searchQuery.name = new RegExp(name)  //  {  name: /xxxx/ }
+      searchQuery.name = new RegExp(name) //  {  name: /xxxx/ }
     }
     // 获取铭文总数量
     const equipTotal = await EquipModel.find(searchQuery).countDocuments()
@@ -240,13 +252,13 @@ module.exports = {
           // 被关联表要关联的字段
           foreignField: '_id',
           // 关联查询出来的放在 categoryInfo属性中
-          as: 'categoryInfo'
-        }
+          as: 'categoryInfo',
+        },
       },
       { $match: searchQuery },
       // 跳过条数
       { $skip: skip },
-      { $limit: pageSize }
+      { $limit: pageSize },
     ])
     response(res, 0, '获取装备数据成功', { equipTotal, equipList })
   },
@@ -261,7 +273,9 @@ module.exports = {
   // -----获取符文的二级分类-----
   async storeCateHandle(req, res) {
     // 找出符文下的子分类
-    const storeCate = await CategoryModel.find({ parent: "617a020ac2b868d520c0e2b5" })
+    const storeCate = await CategoryModel.find({
+      parent: '617a020ac2b868d520c0e2b5',
+    })
     response(res, 0, '获取铭文二级分类成功', storeCate)
   },
 
@@ -277,7 +291,12 @@ module.exports = {
     let item, msg
     if (id) {
       // 修改铭文
-      item = await StoreModel.findByIdAndUpdate(id, { name, icon, attr, category })
+      item = await StoreModel.findByIdAndUpdate(id, {
+        name,
+        icon,
+        attr,
+        category,
+      })
       msg = '更新铭文成功'
     } else {
       // 添加铭文
@@ -319,7 +338,7 @@ module.exports = {
     let name = req.query.name
     let searchQuery = {}
     if (name) {
-      searchQuery.name = new RegExp(name)  //  {  name: /xxxx/ }
+      searchQuery.name = new RegExp(name) //  {  name: /xxxx/ }
     }
     // 获取铭文总数量
     const storeTotal = await StoreModel.find(searchQuery).countDocuments()
@@ -333,28 +352,30 @@ module.exports = {
           // 被关联表要关联的字段
           foreignField: '_id',
           // 关联查询出来的放在 categoryInfo属性中
-          as: 'categoryInfo'
-        }
+          as: 'categoryInfo',
+        },
       },
       { $match: searchQuery },
       // 跳过条数
       { $skip: skip },
-      { $limit: pageSize }
+      { $limit: pageSize },
     ])
     response(res, 0, '获取铭文数据成功', { storeTotal, storeList })
   },
 
-  // -----获取英雄二级分类 ---- 
+  // -----获取英雄二级分类 ----
   async heroCateHandle(req, res) {
     // 找出英雄下的子分类
-    const heroCate = await CategoryModel.find({ parent: "6179fe1964b8e1d4a798d93e" })
+    const heroCate = await CategoryModel.find({
+      parent: '6179fe1964b8e1d4a798d93e',
+    })
     response(res, 0, '获取英雄二级分类成功', heroCate)
   },
 
   // 添加或修改英雄
   async heroEditHandle(req, res) {
     const { id, heroItem } = req.body
-    console.log(heroItem);
+    console.log(heroItem)
     const isHave = await HeroModel.findOne({ name: heroItem.name })
     if (isHave && !id) {
       response(res, 1, '该英雄已存在')
@@ -400,7 +421,7 @@ module.exports = {
     let name = req.query.name
     let searchQuery = {}
     if (name) {
-      searchQuery.name = new RegExp(name)  //  {  name: /xxxx/ }
+      searchQuery.name = new RegExp(name) //  {  name: /xxxx/ }
     }
 
     // 获取当前查询英雄总数量
@@ -415,13 +436,13 @@ module.exports = {
           // 被关联表要关联的字段
           foreignField: '_id',
           // 关联查询出来的放在 categoryInfo属性中
-          as: 'categoryInfo'
-        }
+          as: 'categoryInfo',
+        },
       },
       { $match: searchQuery },
       // 跳过条数
       { $skip: skip },
-      { $limit: pageSize }
+      { $limit: pageSize },
     ])
     response(res, 0, '获取英雄数据成功', { heroTotal, heroList })
   },
@@ -476,7 +497,7 @@ module.exports = {
   async userEditHandle(req, res) {
     // 获取管理员信息
     const { id, email, password, name, avatar } = req.body
-    console.log(id);
+    console.log(id)
     const isHave = await UserModel.findOne({ email })
     // 如果是添加, 有邮箱同名的不允许添加
     if (isHave && !id) {
@@ -494,7 +515,12 @@ module.exports = {
         return
       }
       // 密码正确才允许修改管理员
-      item = await UserModel.findByIdAndUpdate(id, { email, password, name, avatar })
+      item = await UserModel.findByIdAndUpdate(id, {
+        email,
+        password,
+        name,
+        avatar,
+      })
       msg = '更新管理员成功'
     } else {
       // 添加管理员
@@ -540,11 +566,24 @@ module.exports = {
     let item, msg
     if (id) {
       // 修改文章
-      item = await ArticleModel.findByIdAndUpdate(id, { title, body, hot, date, categories })
+      item = await ArticleModel.findByIdAndUpdate(id, {
+        title,
+        body,
+        hot,
+        date,
+        categories,
+      })
       msg = '更新文章成功'
     } else {
       // 添加文章
-      item = await ArticleModel.create({ title, body, hot, author, date, categories })
+      item = await ArticleModel.create({
+        title,
+        body,
+        hot,
+        author,
+        date,
+        categories,
+      })
       msg = '新建文章成功'
     }
     response(res, 0, msg, item)
@@ -560,7 +599,7 @@ module.exports = {
   // 获取文章二级分类
   async articleCateHandle(req, res) {
     const articleCate = await CategoryModel.find({
-      parent: { $in: ['6179fde964b8e1d4a798d93d', '61849eec73c5253352104d2b'] }
+      parent: { $in: ['6179fde964b8e1d4a798d93d', '61849eec73c5253352104d2b'] },
     })
     response(res, 0, '获取文章二级分类成功', articleCate)
   },
@@ -578,13 +617,17 @@ module.exports = {
     let title = req.query.title
     let searchQuery = {}
     if (title) {
-      searchQuery.title = new RegExp(title)  //  {  name: /xxxx/ }
+      searchQuery.title = new RegExp(title) //  {  name: /xxxx/ }
     }
 
     // 数据库中文章总数
     const articleTotal = await ArticleModel.find(searchQuery).countDocuments()
     const articleList = await ArticleModel.find(searchQuery)
-      .populate('categories').setOptions(searchQuery).skip(skip).limit(pageSize).sort({ date: -1 })
+      .populate('categories')
+      .setOptions(searchQuery)
+      .skip(skip)
+      .limit(pageSize)
+      .sort({ date: -1 })
     response(res, 0, '获取文章列表成功', { articleTotal, articleList })
   },
 
@@ -611,11 +654,24 @@ module.exports = {
     let item, msg
     if (id) {
       // 修改图文
-      item = await PicarticleModel.findByIdAndUpdate(id, { title, body, pic, date, categories })
+      item = await PicarticleModel.findByIdAndUpdate(id, {
+        title,
+        body,
+        pic,
+        date,
+        categories,
+      })
       msg = '更新图文成功'
     } else {
       // 添加图文
-      item = await PicarticleModel.create({ title, body, pic, author, date, categories })
+      item = await PicarticleModel.create({
+        title,
+        body,
+        pic,
+        author,
+        date,
+        categories,
+      })
       msg = '新建图文成功'
     }
     response(res, 0, msg, item)
@@ -631,7 +687,7 @@ module.exports = {
   // 获取图文二级分类
   async picarticleCateHandle(req, res) {
     const picarticleCate = await CategoryModel.find({
-      parent: '61985ee3c87743231e0e4d25'
+      parent: '61985ee3c87743231e0e4d25',
     })
     response(res, 0, '获取图文二级分类成功', picarticleCate)
   },
@@ -649,13 +705,19 @@ module.exports = {
     let title = req.query.title
     let searchQuery = {}
     if (title) {
-      searchQuery.title = new RegExp(title)  //  {  name: /xxxx/ }
+      searchQuery.title = new RegExp(title) //  {  name: /xxxx/ }
     }
 
     // 数据库中图文总数
-    const picarticleTotal = await PicarticleModel.find(searchQuery).countDocuments()
+    const picarticleTotal = await PicarticleModel.find(
+      searchQuery
+    ).countDocuments()
     const picarticleList = await PicarticleModel.find(searchQuery)
-      .populate('categories').setOptions(searchQuery).skip(skip).limit(pageSize).sort({ date: -1 })
+      .populate('categories')
+      .setOptions(searchQuery)
+      .skip(skip)
+      .limit(pageSize)
+      .sort({ date: -1 })
     response(res, 0, '获取图文列表成功', { picarticleTotal, picarticleList })
   },
 
@@ -682,11 +744,26 @@ module.exports = {
     let item, msg
     if (id) {
       // 修改视频
-      item = await VideoModel.findByIdAndUpdate(id, { title, cover, video, play, category, date })
+      item = await VideoModel.findByIdAndUpdate(id, {
+        title,
+        cover,
+        video,
+        play,
+        category,
+        date,
+      })
       msg = '更新视频成功'
     } else {
       // 添加视频
-      item = await VideoModel.create({ title, cover, video, play, author, category, date })
+      item = await VideoModel.create({
+        title,
+        cover,
+        video,
+        play,
+        author,
+        category,
+        date,
+      })
       msg = '新建视频成功'
     }
     response(res, 0, msg, item)
@@ -712,19 +789,25 @@ module.exports = {
     let title = req.query.title
     let searchQuery = {}
     if (title) {
-      searchQuery.title = new RegExp(title)  //  {  name: /xxxx/ }
+      searchQuery.title = new RegExp(title) //  {  name: /xxxx/ }
     }
 
     // 数据库中视频总数
     const videoTotal = await VideoModel.find(searchQuery).countDocuments()
-    const videoList = await VideoModel.find(searchQuery).setOptions(searchQuery).skip(skip).limit(pageSize).sort({ date: -1 })
+    const videoList = await VideoModel.find(searchQuery)
+      .setOptions(searchQuery)
+      .skip(skip)
+      .limit(pageSize)
+      .sort({ date: -1 })
     response(res, 0, '获取视频列表成功', { videoTotal, videoList })
   },
 
   // 获取视频二级分类
   async videoCateHandle(req, res) {
     // 找出视频下的子分类
-    const videoCate = await CategoryModel.find({ parent: "6179fe2764b8e1d4a798d93f" })
+    const videoCate = await CategoryModel.find({
+      parent: '6179fe2764b8e1d4a798d93f',
+    })
     response(res, 0, '获取视频二级分类成功', videoCate)
   },
 
@@ -751,10 +834,14 @@ module.exports = {
     const adTotal = await AdModel.find().countDocuments()
     const userTotal = await UserModel.find().countDocuments()
     response(res, 0, '获取数据总数成功', [
-      equipTotal, storeTotal,
-      articleTotal, picarticleTotal, videoTotal,
-      heroTotal, adTotal, userTotal
+      equipTotal,
+      storeTotal,
+      articleTotal,
+      picarticleTotal,
+      videoTotal,
+      heroTotal,
+      adTotal,
+      userTotal,
     ])
-  }
-
+  },
 }
