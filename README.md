@@ -2,7 +2,7 @@
 
 moba 是使用 Node.js (Express.js) + Vue.js (Element UI) 全栈开发的英雄联盟手游移动端官网和管理后台项目
 
-项目已上线，欢迎体验！<http://lol.moba.tld>
+项目已上线，欢迎体验！<http://lol.moba.ltd>
 
 ## 项目布局
 
